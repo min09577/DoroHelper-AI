@@ -22,6 +22,30 @@ PC 端日常任务清理助手。一键清理多项日常事务。支持除**国
 
 </div>
 
+## DoroHelper 已全面升级为 MDA
+
+非常感谢大家一直以来对 DoroHelper 的支持与陪伴。
+
+在持续开发与维护的过程中，当前脚本的整体架构已经较为老旧，限制了后续功能扩展与长期维护的效率。因此，基于全新的 MaaFramework 框架，脚本已完成完整重写。新版脚本命名为 **MDA（Maa Doro Assistant）**。借助这一成熟且强大的社区工具，未来在修复问题与更新内容方面将更加高效、稳定。
+
+相比旧版本，新框架带来了一系列显著提升：
+
+- 全新 UI 设计，界面更加简洁美观，并原生支持多语言，可自由设置主题、配色与背景
+- 支持任务顺序自由调整，并提供更加丰富的细节配置选项
+- 支持游戏后台运行，使用体验更加灵活
+- 支持全分辨率运行，不再受限于特定分辨率
+- 支持 Linux、macOS 等操作系统，并兼容 aarch64 架构
+
+### MDA 下载地址
+
+|渠道|链接|
+|--|--|
+|GitHub|[https://github.com/1204244136/MDA/releases/latest](https://github.com/1204244136/MDA/releases/latest)|
+|百度网盘|[https://pan.baidu.com/s/1X4_vJ3ei9fiayRWHpI0f9A?pwd=bed7](https://pan.baidu.com/s/1X4_vJ3ei9fiayRWHpI0f9A?pwd=bed7)（提取码：bed7）|
+|夸克网盘|[https://pan.quark.cn/s/9a30ca1aabe7](https://pan.quark.cn/s/9a30ca1aabe7)（提取码：Cprn）|
+
+旧版本将停止维护但仍可正常使用。如果新版本未能符合你的使用习惯，也欢迎继续选择旧版本。
+
 ## 我们联合
 
 - 牢 N 写的功能类似的[手机脚本](https://github.com/Zebartin/autoxjs-scripts)
