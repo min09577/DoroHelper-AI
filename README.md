@@ -46,13 +46,53 @@ PC 端日常任务清理助手。一键清理多项日常事务。支持除**国
 
 旧版本将停止维护但仍可正常使用。如果新版本未能符合你的使用习惯，也欢迎继续选择旧版本。
 
-## 我们联合
+## 项目演进历史
 
-- 牢 N 写的功能类似的[手机脚本](https://github.com/Zebartin/autoxjs-scripts)
+```mermaid
+flowchart LR
+    %% 样式定义
+    classDef route1 fill:#ffe599,stroke:#333,stroke-width:2px;
+    classDef route2 fill:#d9d2e9,stroke:#333,stroke-width:2px;
+    classDef route2_new fill:#c9daf8,stroke:#333,stroke-width:2px;
+    classDef kyoka fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef zhiyi fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef dead fill:#f4cccc,stroke:#cc0000,stroke-width:1px;
+    classDef active fill:#d9ead3,stroke:#274e13,stroke-width:1px;
+    classDef track fill:#fafafa,stroke:#999,stroke-width:1px,stroke-dasharray:4,font-weight:bold;
 
-- 牢 D 功能类似的[模拟器脚本](https://github.com/takagisanmie/NIKKEAutoScript)
+    %% ==================== 轨道标签 ====================
+    TL1[轨道一<br>NIKKE-scripts 路线]:::track
+    TL2[轨道二<br>NKAS 传承线]:::track
+    TL3[轨道三<br>DoroHelper / MDA 演进线]:::track
 
-- 群友的[CDK 兑换网站](http://nikke.hayasa.link/)
+    %% ==================== 轨道一：NIKKE-scripts 路线 (模拟器流) ====================
+    TL1 --> Z1[项目诞生 v0.1<br>2023-02-05<br>@Zebartin]:::route1
+    Z1 --> Z2(持续迭代至 v1.2.22<br>2025-06-19):::route1
+    Z2 -->|❌ 官方重拳打压模拟器| Z_End([项目停更 / 走向终点]):::route1
+    Z_End --> DeadStatus1([❌ 已停止维护]):::dead
+
+    %% ==================== 轨道二：NKAS 传承线 (独立日常与复刻流) ====================
+    TL2 --> T1[独立日常脚本诞生 v0.0.7<br>2023-04-30<br>@takagisanmie]:::route2
+    T1 -->|在线更新 / 非GitHub主仓| T2(因作者精力不足<br>遗憾停止更新):::route2
+    T2 -->|🔥 火种重燃| M_Active([🟢 NKAS 精神续作<br>megumiss/NIKKEAutoScript<br>由他人复刻 / 至今活跃维护]):::route2_new
+    T2 --- DeadStatus2([❌ 原作者停更]):::dead
+
+    %% ==================== 轨道三：DoroHelper / MDA 演进线 (PC现代化流) ====================
+    TL3 --> D1[DoroHelper 诞生<br>2024-07-16<br>@kyokakawaii]:::kyoka
+    D1 --> D2(Doro v0.1.16.1<br>2025-01-16):::kyoka
+    D2 -->|项目交接| D3(Doro v0.1.22<br>2025-04-20<br>@知一一 接手):::zhiyi
+    D3 --> D4[Doro v1.15.8 最终版<br>2026-05-11]:::zhiyi
+    D4 -->|原版谢幕| D_End([DoroHelper 归档]):::dead
+    D4 -->|彻底重构| MDA([🟢 MDA 项目<br>1204244136/MDA<br>全新主推 / 活跃维护]):::zhiyi
+
+    %% 轨道三怀旧服分支
+    D2 -.->|满足部分用户需求| C1(Classic 诞生<br>保留旧版核心):::kyoka
+    C1 --> C2(Classic v0.1.16.5<br>2025-08-10):::kyoka
+    C2 --> C_Active([🟢 DoroHelper_classic<br>kyokakawaii 至今维护]):::kyoka
+
+    %% 活跃状态统一样式
+    class M_Active,C_Active,MDA active;
+```
 
 ## 版本问题
 

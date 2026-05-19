@@ -22,13 +22,77 @@ A PC tool for clearing daily tasks. One-click cleaning of multiple daily chores.
 
 </div>
 
-## We Unite
+## DoroHelper Has Been Fully Upgraded to MDA
 
-- **Dr. N**'s similar [mobile script](https://github.com/Zebartin/autoxjs-scripts)
+Thank you all for your continued support and companionship with DoroHelper.
 
-- **Dr. D**'s similar [emulator script](https://github.com/takagisanmie/NIKKEAutoScript)
+During the ongoing development and maintenance process, the overall architecture of the script has become quite outdated, limiting the efficiency of future feature expansion and long-term maintenance. Therefore, based on the entirely new MaaFramework, the script has been completely rewritten. The new version is named **MDA (Maa Doro Assistant)**. With this mature and powerful community tool, future bug fixes and content updates will be more efficient and stable.
 
-- Group members' [CDK redemption website](http://nikke.hayasa.link/)
+Compared to the old version, the new framework brings a series of significant improvements:
+
+- Brand new UI design with a cleaner and more aesthetically pleasing interface, natively supporting multilingual, and allowing free customization of themes, colors, and backgrounds
+- Supports free adjustment of task order and provides richer detailed configuration options
+- Supports running the game in the background for a more flexible experience
+- Supports all resolutions, no longer limited to specific resolutions
+- Supports Linux, macOS, and other operating systems, and is compatible with the aarch64 architecture
+
+### MDA Download Links
+
+|Channel|Link|
+|--|--|
+|GitHub|[https://github.com/1204244136/MDA/releases/latest](https://github.com/1204244136/MDA/releases/latest)|
+|Baidu Netdisk|[https://pan.baidu.com/s/1X4_vJ3ei9fiayRWHpI0f9A?pwd=bed7](https://pan.baidu.com/s/1X4_vJ3ei9fiayRWHpI0f9A?pwd=bed7) (Extraction code: bed7)|
+|Quark Netdisk|[https://pan.quark.cn/s/9a30ca1aabe7](https://pan.quark.cn/s/9a30ca1aabe7) (Extraction code: Cprn)|
+
+The old version will no longer be maintained but can still be used normally. If the new version does not suit your usage habits, you are welcome to continue using the old version.
+
+## Project Evolution History
+
+```mermaid
+flowchart LR
+    %% Style definitions
+    classDef route1 fill:#ffe599,stroke:#333,stroke-width:2px;
+    classDef route2 fill:#d9d2e9,stroke:#333,stroke-width:2px;
+    classDef route2_new fill:#c9daf8,stroke:#333,stroke-width:2px;
+    classDef kyoka fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef zhiyi fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef dead fill:#f4cccc,stroke:#cc0000,stroke-width:1px;
+    classDef active fill:#d9ead3,stroke:#274e13,stroke-width:1px;
+    classDef track fill:#fafafa,stroke:#999,stroke-width:1px,stroke-dasharray:4,font-weight:bold;
+
+    %% ==================== Track Labels ====================
+    TL1[Track 1<br>NIKKE-scripts Route]:::track
+    TL2[Track 2<br>NKAS Legacy Line]:::track
+    TL3[Track 3<br>DoroHelper / MDA Evolution Line]:::track
+
+    %% ==================== Track 1: NIKKE-scripts Route (Emulator Flow) ====================
+    TL1 --> Z1[Project Birth v0.1<br>2023-02-05<br>@Zebartin]:::route1
+    Z1 --> Z2(Continuous iteration to v1.2.22<br>2025-06-19):::route1
+    Z2 -->|❌ Official crackdown on emulators| Z_End([Project discontinued / End of the line]):::route1
+    Z_End --> DeadStatus1([❌ No longer maintained]):::dead
+
+    %% ==================== Track 2: NKAS Legacy Line (Independent Daily & Revival Flow) ====================
+    TL2 --> T1[Independent daily script born v0.0.7<br>2023-04-30<br>@takagisanmie]:::route2
+    T1 -->|Online update / Non-GitHub main repo| T2(Author ran out of energy<br>Regretfully stopped updating):::route2
+    T2 -->|🔥 Ember reignited| M_Active([🟢 NKAS Spiritual Successor<br>megumiss/NIKKEAutoScript<br>Forked by others / Actively maintained to this day]):::route2_new
+    T2 --- DeadStatus2([❌ Original author stopped updating]):::dead
+
+    %% ==================== Track 3: DoroHelper / MDA Evolution Line (PC Modernization Flow) ====================
+    TL3 --> D1[DoroHelper Born<br>2024-07-16<br>@kyokakawaii]:::kyoka
+    D1 --> D2(Doro v0.1.16.1<br>2025-01-16):::kyoka
+    D2 -->|Project handover| D3(Doro v0.1.22<br>2025-04-20<br>@Zhiyiyi takes over):::zhiyi
+    D3 --> D4[Doro v1.15.8 Final Version<br>2026-05-11]:::zhiyi
+    D4 -->|Original version curtain call| D_End([DoroHelper Archived]):::dead
+    D4 -->|Complete rewrite| MDA([🟢 MDA Project<br>1204244136/MDA<br>New flagship / Actively maintained]):::zhiyi
+
+    %% Track 3 Classic branch
+    D2 -.->|Meets some users' needs| C1(Classic Born<br>Retains old core):::kyoka
+    C1 --> C2(Classic v0.1.16.5<br>2025-08-10):::kyoka
+    C2 --> C_Active([🟢 DoroHelper_classic<br>Maintained by kyokakawaii to this day]):::kyoka
+
+    %% Active status unified style
+    class M_Active,C_Active,MDA active;
+```
 
 ## Version Notes
 
