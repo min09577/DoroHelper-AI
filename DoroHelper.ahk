@@ -2482,7 +2482,7 @@ MsgSponsor(*) {
     btnOnlineSponsor.SetFont("bold s12")
     guiSponsor.Add("Text", "w400 h10")
     ; 次要按钮
-    btnUpgradeV6 := guiSponsor.Add("Button", "xs w128 h30", "V4升级V6")
+    btnUpgradeV6 := guiSponsor.Add("Button", "xs w128 h30", "迁移到MDA")
     btnUpgradeV6.SetFont("bold s10")
     btnQueryOnline := guiSponsor.Add("Button", "x+3 yp w128 h30", "查询会员")
     btnQueryOnline.SetFont("bold s10")
@@ -2524,7 +2524,7 @@ OpenOnlineSponsor(*) {
         fullURL := baseURL
     Run(fullURL)
 }
-;tag V4升级V6（在线录入，保留当前余额）
+;tag V4迁移到MDA（在线录入V6设备信息）
 UpgradeV6Online(*) {
     global g_numeric_settings
     ; 先查询V4会员信息，确认是会员
@@ -2532,15 +2532,13 @@ UpgradeV6Online(*) {
     v4Hash := GenerateDeviceCode()
     v4Result := QueryV4MemberByHash(v4Hash)
     if (!v4Result.found) {
-        MsgBox("未查询到您的V4会员信息，无法进行升级。`n`n请确认您已经是V4会员后再试。", "升级失败", "Icon!")
+        MsgBox("未查询到您的 DoroHelper V4 会员信息，无法引导迁移。`n`n请确认您已经是 DoroHelper V4 会员后再试。", "迁移失败", "Icon!")
         return
     }
-    AddLog("查询到V4会员，余额: " . v4Result.account_value . " ORANGE", "Green")
+    AddLog("查询到 DoroHelper V4 会员，正在引导迁移到 MDA", "Green")
     ; 构建URL
     baseURL := "https://doropay.top"
     params := "tab=upgrade"
-    ; 传递V4哈希（服务器根据此哈希查找余额并继承到V6）
-    params .= "&v4_hash=" . v4Hash
     ; 用户ID（可选预填）
     userID := g_numeric_settings.Has("UserID") ? g_numeric_settings["UserID"] : ""
     if (userID != "")
@@ -2560,27 +2558,19 @@ UpgradeV6Online(*) {
     }
     fullURL := baseURL . "?" . params
     Run(fullURL)
+    MsgBox("已打开 MDA/V6 迁移页面。`n`n完成迁移后，请在 MDA 中使用会员功能；DoroHelper 是旧版 V4 项目，不应继续作为新会员入口使用。", "迁移到 MDA", "Iconi")
 }
 ;tag 根据V4哈希查询会员信息
 QueryV4MemberByHash(v4Hash) {
     try {
-        apiUrl := "https://doropay.top/api/members/v4"
-        jsonContent := DownloadUrlContent(apiUrl)
-        if (jsonContent = "")
-            return { found: false, account_value: "0" }
-        members := Json.Load(&jsonContent)
-        if (!IsObject(members))
-            return { found: false, account_value: "0" }
-        for member in members {
-            if (member.Has("hash") && member.Get("hash") = v4Hash) {
-                val := member.Has("account_value") ? member.Get("account_value") : "0"
-                if (Float(val) > 0)
-                    return { found: true, account_value: val }
-            }
+        members := FetchAndParseGroupData(4)
+        info := GetMembershipInfoForHash(v4Hash, members)
+        if (info["UserLevel"] > 0 || info["RemainingValue"] > 0) {
+            return { found: true, account_value: info["RemainingValue"] }
         }
         return { found: false, account_value: "0" }
     } catch as e {
-        AddLog("查询V4会员失败: " . e.Message, "Red")
+        AddLog("查询 DoroHelper V4 会员失败: " . e.Message, "Red")
         return { found: false, account_value: "0" }
     }
 }
@@ -3228,11 +3218,13 @@ FetchAndParseGroupData(version := 4) {
     local groupFileName := "GroupArrayV" . version . ".json"
     ; 定义所有可用的镜像站点
     local mirrors := Map(
-        "API", "https://doropay.top/api/members/v" . version,
         "Gitee", "https://gitee.com/con_sul/DoroHelper/raw/main/group/" . groupFileName,
         "GitHub", "https://raw.githubusercontent.com/1204244136/DoroHelper/refs/heads/main/group/" . groupFileName,
         "jsDelivr", "https://cdn.jsdelivr.net/gh/1204244136/DoroHelper@main/group/" . groupFileName
     )
+    if (version != 4) {
+        mirrors["API"] := "https://doropay.top/api/members/v" . version
+    }
     ; 获取用户选择的源或使用默认值
     local preferredSource := g_numeric_settings.Has("GroupDataSource") ? g_numeric_settings["GroupDataSource"] : "API"
     local sourceOrder := []
@@ -3536,13 +3528,13 @@ CheckUserGroup(forceUpdate := false) {
 ;tag 提示用户升级到V6
 PromptUpgradeToV6() {
     result := MsgBox(
-        "检测到您正在使用V4验证方式。`n`n" .
-        "V6验证支持：`n" .
-        "• 更换硬盘后自动适配`n" .
-        "• 更高的安全性`n" .
-        "• 更稳定的验证体验`n`n" .
-        "请点击左上角「赞助」按钮，然后切换到「升级V6」标签页进行升级。",
-        "升级验证方式",
+        "检测到您正在使用 DoroHelper V4 验证方式。`n`n" .
+        "新的会员体系已迁移到 MDA：`n" .
+        "• 使用 V6 设备信息`n" .
+        "• 后续会员功能在 MDA 中使用`n" .
+        "• DoroHelper 仍作为旧版 V4 项目保留`n`n" .
+        "请点击左上角「赞助」按钮，再选择「迁移到MDA」完成迁移。",
+        "迁移到 MDA",
         "Iconi"
     )
 }
