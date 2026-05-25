@@ -2482,7 +2482,7 @@ MsgSponsor(*) {
     btnOnlineSponsor.SetFont("bold s12")
     guiSponsor.Add("Text", "w400 h10")
     ; 次要按钮
-    btnUpgradeV6 := guiSponsor.Add("Button", "xs w128 h30", "迁移到MDA")
+    btnUpgradeV6 := guiSponsor.Add("Button", "xs w128 h30", "迁移会员到MDA")
     btnUpgradeV6.SetFont("bold s10")
     btnQueryOnline := guiSponsor.Add("Button", "x+3 yp w128 h30", "查询会员")
     btnQueryOnline.SetFont("bold s10")
@@ -2532,7 +2532,9 @@ UpgradeV6Online(*) {
     v4Hash := GenerateDeviceCode()
     v4Result := QueryV4MemberByHash(v4Hash)
     if (!v4Result.found) {
-        MsgBox("未查询到您的 DoroHelper V4 会员信息，无法引导迁移。`n`n请确认您已经是 DoroHelper V4 会员后再试。", "迁移失败", "Icon!")
+        result := MsgBox("未查询到当前设备的 DoroHelper V4 会员信息，无法执行旧会员迁移。`n`n如果您已经在 DoroPay / MDA 开通过会员，请直接在 MDA 中使用；DoroHelper 已停止维护，不再作为新会员验证入口。`n`n是否打开 DoroPay 查询页面确认当前会员状态？", "无法迁移", "YesNo Icon!")
+        if (result = "Yes")
+            Run("https://doropay.top/?tab=query")
         return
     }
     AddLog("查询到 DoroHelper V4 会员，正在引导迁移到 MDA", "Green")
@@ -2553,12 +2555,12 @@ UpgradeV6Online(*) {
         params .= "&disk=" . deviceCodeV6.disk_hash
         params .= "&guid=" . deviceCodeV6.guid_hash
     } catch as e {
-        MsgBox("V6设备码生成失败: " . e.Message, "错误", "Iconx")
+        MsgBox("当前设备信息生成失败，无法自动打开迁移页。`n`n这不是会员失效；请在 MDA 或 DoroPay 页面中重新操作。`n`n错误信息: " . e.Message, "迁移到 MDA", "Iconx")
         return
     }
     fullURL := baseURL . "?" . params
     Run(fullURL)
-    MsgBox("已打开 MDA/V6 迁移页面。`n`n完成迁移后，请在 MDA 中使用会员功能；DoroHelper 是旧版 V4 项目，不应继续作为新会员入口使用。", "迁移到 MDA", "Iconi")
+    MsgBox("已打开 DoroPay 的 MDA 迁移页面。`n`n此操作只会将当前设备绑定到 DoroPay/MDA，不会在 DoroHelper 中开通或验证新会员。`n完成迁移后，请在 MDA 中查看和使用会员功能。", "迁移会员到 MDA", "Iconi")
 }
 ;tag 根据V4哈希查询会员信息
 QueryV4MemberByHash(v4Hash) {
@@ -3525,18 +3527,18 @@ CheckUserGroup(forceUpdate := false) {
     cacheTimestamp := A_TickCount
     return highestMembership
 }
-;tag 提示用户升级到V6
+;tag 提示用户迁移到 MDA
 PromptUpgradeToV6() {
     result := MsgBox(
-        "检测到您正在使用 DoroHelper V4 验证方式。`n`n" .
-        "新的会员体系已迁移到 MDA：`n" .
-        "• 使用 V6 设备信息`n" .
-        "• 后续会员功能在 MDA 中使用`n" .
-        "• DoroHelper 仍作为旧版 V4 项目保留`n`n" .
-        "请点击左上角「赞助」按钮，再选择「迁移到MDA」完成迁移。",
-        "迁移到 MDA",
-        "Iconi"
+        "检测到当前设备仍可匹配 DoroHelper 旧版 V4 会员。`n`n" .
+        "DoroHelper 已停止维护，后续会员功能请迁移到 MDA 使用。`n" .
+        "迁移只会把当前设备绑定到 DoroPay/MDA，不会在 DoroHelper 中开通或验证新会员。`n`n" .
+        "是否现在打开 DoroPay 的 MDA 迁移页面？",
+        "迁移会员到 MDA",
+        "YesNo Iconi"
     )
+    if (result = "Yes")
+        UpgradeV6Online()
 }
 ;tag 复制V6信息（带验证）
 CopyV6WithValidation(userIDEdit, deviceCodeV6, *) {
