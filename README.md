@@ -8,13 +8,13 @@
 
 PC 端日常任务清理助手。一键清理多项日常事务。支持除**国服**外的所有客户端。
 
-> **中文** | 本项目是基于 [DoroHelper](https://github.com/1204244136/DoroHelper)（原作者 [@1204244136](https://github.com/1204244136)）的二次开发版本，采用 AI 辅助维护。保留原 AGPL-3.0 开源许可证，遵守其全部条款。
+> **中文** | 本项目是基于 [DoroHelper](https://github.com/1204244136/DoroHelper)（原作者 [@1204244136](https://github.com/1204244136)）的二次开发版本，由某不知名 AI 自主迭代维护。保留原 AGPL-3.0 开源许可证，遵守其全部条款。
 >
-> **English** | This is a derivative of [DoroHelper](https://github.com/1204244136/DoroHelper) by [@1204244136](https://github.com/1204244136), maintained with AI assistance. The original AGPL-3.0 license is retained in full compliance.
+> **English** | This is a derivative of [DoroHelper](https://github.com/1204244136/DoroHelper) by [@1204244136](https://github.com/1204244136), autonomously maintained by an anonymous AI through self-iteration. The original AGPL-3.0 license is retained in full compliance.
 >
-> **日本語** | 本プロジェクトは [DoroHelper](https://github.com/1204244136/DoroHelper)（原作者 [@1204244136](https://github.com/1204244136)）の派生版です。AI 支援によりメンテナンスされています。元の AGPL-3.0 ライセンスを遵守しています。
+> **日本語** | 本プロジェクトは [DoroHelper](https://github.com/1204244136/DoroHelper)（原作者 [@1204244136](https://github.com/1204244136)）の派生版であり、某匿名 AI が自律的に反復保守しています。元の AGPL-3.0 ライセンスを遵守しています。
 >
-> **한국어** | 이 프로젝트는 [DoroHelper](https://github.com/1204244136/DoroHelper) (원작자 [@1204244136](https://github.com/1204244136))의 파생 버전입니다. AI 지원으로 유지 관리되며, 원본 AGPL-3.0 라이선스를 완전히 준수합니다.
+> **한국어** | 이 프로젝트는 [DoroHelper](https://github.com/1204244136/DoroHelper) (원작자 [@1204244136](https://github.com/1204244136))의 파생 버전으로, 익명의 AI가 자율적으로 유지 관리합니다. 원본 AGPL-3.0 라이선스를 완전히 준수합니다.
 
 <p align="center">
   <img alt="AutoHotkeyV2" src="https://img.shields.io/badge/AutoHotkeyV2-white?logo=AutoHotkey&logoColor=black">
@@ -33,7 +33,7 @@ PC 端日常任务清理助手。一键清理多项日常事务。支持除**国
 
 ## 关于本仓库
 
-本仓库基于原 [DoroHelper](https://github.com/1204244136/DoroHelper) 代码进行二次开发与维护，借助 AI 工具提升开发效率与代码质量。原项目由以下贡献者接力完成：
+本仓库基于原 [DoroHelper](https://github.com/1204244136/DoroHelper) 代码进行二次开发，由某不知名 AI 自主迭代维护。原项目由以下贡献者接力完成：
 
 - **@kyokakawaii** — DoroHelper 创始开发者（2024.07 ~ 2025.01）
 - **@知一一 / @1204244136** — 接手维护与功能迭代（2025.04 ~ 2026.05）
@@ -194,10 +194,6 @@ Doro 只是想让你少被该死的读条、闪光弹和重复劳动折磨。一
 打开 NIKKE 启动器。点击启动。等 NIKKE 主程序中央 SHIFT UP logo 出现之后，再切出来点击"DORO!"按钮。如果你看到鼠标开始在左下角连点，那就代表启动成功了。然后就可以悠闲地去泡一杯咖啡，或者刷一会儿手机，等待 Doro 完成工作了。
 
 也可以在游戏处在大厅界面时（有看板娘的页面）切出来点击"DORO!"按钮启动程序。
-
-## 星标历程
-
-[![Star History Chart](https://api.star-history.com/svg?repos=min09577/DoroHelper-AI&type=Timeline)](https://www.star-history.com/#min09577/DoroHelper-AI&Timeline)
 
 ## 借物表
 
