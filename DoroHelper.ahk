@@ -22,8 +22,8 @@ currentVersion := "v1.15.10"
 ; 判断拓展名
 SplitPath A_ScriptFullPath, , , &scriptExtension
 scriptExtension := StrLower(scriptExtension)
-usr := "1204244136"
-repo := "DoroHelper"
+usr := "min09577"
+repo := "DoroHelper-AI"
 ;endregion 设置常量
 ;region 设置变量
 ;tag 简单开关
@@ -293,10 +293,10 @@ doroGui.MarginY := Round(doroGui.MarginY * 1)
 doroGui.SetFont('s12', 'Microsoft YaHei UI')
 ;tag 框
 Update := doroGui.AddGroupBox("x10 y10 w250 h210 ", "更新")
-;tag 赞助
-BtnSponsor := doroGui.Add("Button", "x70 yp-1 w50 h25", "赞助")
-doroGui.Tips.SetTip(BtnSponsor, "Sponsor")
-BtnSponsor.OnEvent("Click", MsgSponsor)
+;tag 关于
+BtnAbout := doroGui.Add("Button", "x70 yp-1 w50 h25", "关于")
+doroGui.Tips.SetTip(BtnAbout, "About DoroHelper-AI")
+BtnAbout.OnEvent("Click", MsgAbout)
 ;tag 帮助
 BtnHelp := doroGui.Add("Button", "x130 yp w50 h25", "帮助")
 doroGui.Tips.SetTip(BtnHelp, "Help")
@@ -314,7 +314,7 @@ doroGui.Tips.SetTip(BtnUpdate, "Check for updates")
 BtnUpdate.OnEvent("Click", ClickOnCheckForUpdate)
 ;tag 用户组
 TextUserGroup := doroGui.Add("Text", "x20 y+5 R1 +0x0100 Section", "用户组：")
-doroGui.Tips.SetTip(TextUserGroup, "你可以通点击上方的赞助按钮来获得更高级的用户组`nUserGroup:You can upgrade your membership by clicking the Sponsor button above`n普通用户:Normal User|铜:Copper|银:Silver|金:Gold")
+doroGui.Tips.SetTip(TextUserGroup, "当前用户组 | User Group`n本仓库为社区免费维护版本，无付费会员")
 VariableUserGroup := doroGui.Add("Text", "x+0.5 w100 R1 +0x0100", g_numeric_settings["UserGroup"])
 ;tag 检查用户组
 BtnCheckUserGroup := doroGui.Add("Button", "x190 yp-1 w50 h25", "检查")
@@ -329,22 +329,8 @@ cbUpdateChannels.OnEvent("Change", (Ctrl, Info) => g_numeric_settings["UpdateCha
 ;tag 资源下载
 TextDownloadSource := doroGui.Add("Text", "xs R1 +0x0100", "资源下载源")
 doroGui.Tips.SetTip(TextDownloadSource, "Download Source")
-cbDownloadSource := doroGui.AddDropDownList(" x140 yp w100", ["GitHub", "Mirror酱"])
-cbDownloadSource.Text := g_numeric_settings["DownloadSource"]
-cbDownloadSource.OnEvent("Change", (Ctrl, Info) => ShowMirror(Ctrl, Info))
-;tag Mirror酱
-MirrorText := doroGui.Add("Text", "xs R1 +0x0100", "Mirror酱CDK❔️")
-doroGui.Tips.SetTip(MirrorText, "Mirror酱是一个第三方应用分发平台，让你能在普通网络环境下更新应用`n网址：https://mirrorchyan.com/zh/get-start?source=doro-github-release（付费使用）`nMirror酱和Doro会员并无任何联系")
-MirrorEditControl := doroGui.Add("Edit", "x140 yp+1 w100 h20")
-MirrorEditControl.Value := g_numeric_settings["MirrorCDK"]
-MirrorEditControl.OnEvent("Change", (Ctrl, Info) => g_numeric_settings["MirrorCDK"] := Ctrl.Value)
-; 初始化隐藏状态
-if g_numeric_settings["DownloadSource"] = "Mirror酱" {
-    ShowMirror(cbDownloadSource, "")
-} else {
-    MirrorText.Visible := false
-    MirrorEditControl.Visible := false
-}
+cbDownloadSource := doroGui.AddDropDownList(" x140 yp w100", ["GitHub"])
+cbDownloadSource.Text := "GitHub"
 ;tag 任务列表
 global g_taskListCheckboxes := []
 doroGui.AddGroupBox("x10 y230 w250 h420 ", "任务列表")
@@ -920,26 +906,16 @@ if g_settings["AutoCheckUpdate"]
     CheckForUpdate(false)
 ;tag 自动运行
 if g_settings["Autostart"] {
-    if g_numeric_settings["UserLevel"] >= 3 {
-        AutoStartDoro()
-    } else {
-        MsgBox("当前用户组不支持自动运行，请点击左上角赞助按钮升级会员组或取消勾选该功能，脚本即将暂停")
-        Pause
-    }
+    AutoStartDoro()
 }
 ;tag 定时启动
 if g_settings["Timedstart"] {
-    if g_numeric_settings["UserLevel"] >= 3 {
-        if !g_numeric_settings["StartupTime"] {
-            MsgBox("请设置定时启动时间")
-            Pause
-        }
-        StartDailyTimer()
-        return
-    } else {
-        MsgBox("当前用户组不支持定时启动，请点击左上角赞助按钮升级会员组或取消勾选该功能，脚本即将暂停")
+    if !g_numeric_settings["StartupTime"] {
+        MsgBox("请设置定时启动时间")
         Pause
     }
+    StartDailyTimer()
+    return
 }
 ;endregion 前置任务
 ;region 点击运行
@@ -953,13 +929,7 @@ ClickOnDoro(*) {
     SetTitleMatchMode 3
     if g_settings["Login"] {
         if g_settings["AutoStartNikke"] {
-            if g_numeric_settings["UserLevel"] >= 3 {
-                AutoStartNikke()
-            }
-            else {
-                MsgBox("当前用户组不支持定时启动，请点击左上角赞助按钮升级会员组或取消勾选该功能，脚本即将暂停")
-                Pause
-            }
+            AutoStartNikke()
         }
     }
     Initialization
@@ -1179,17 +1149,7 @@ ClickOnDoro(*) {
     CalculateAndShowSpan()
     finalMessageTitle := "DoroHelper任务完成！"
     finalMessageText := finalMessageText . "Doro完成任务！" . outputText
-    if g_numeric_settings["UserLevel"] < 1 or !g_settings["CloseAdvertisement"] {
-        finalMessageText .= "`n可以支持一下Doro吗"
-        Result := MsgBox(finalMessageText, finalMessageTitle, "YesNo IconI")
-        if Result = "Yes"
-            MsgSponsor
-    }
-    else {
-        ; 普通会员
-        finalMessageText .= "`n感谢你的支持～"
-        MsgBox(finalMessageText, finalMessageTitle, "IconI")
-    }
+    MsgBox(finalMessageText, finalMessageTitle, "IconI")
     if g_settings["DoroClosing"] {
         if InStr(currentVersion, "beta") {
             MsgBox ("测试版本禁用自动关闭！", "DoroHelper提示", "iconx")
@@ -1355,7 +1315,7 @@ Initialization() {
     WinGetPos &NikkeXP, &NikkeYP, &NikkeWP, &NikkeHP, nikkeID
     global TrueRatio := NikkeH / stdScreenH
     GameRatio := Round(NikkeW / NikkeH, 3)
-    AddLog("项目地址https://github.com/1204244136/DoroHelper")
+    AddLog("项目地址https://github.com/min09577/DoroHelper-AI")
     AddLog("当前的doro版本是" currentVersion)
     AddLog("屏幕宽度是" A_ScreenWidth)
     AddLog("屏幕高度是" A_ScreenHeight)
@@ -1414,33 +1374,8 @@ Initialization() {
             Pause
     }
 }
-; 检查 V6 设备码是否在黑名单中
+; 黑名单检查已移除（社区免费版本，无远程校验）
 CheckBlacklistV6(deviceCodeV6) {
-    ; 构建请求数据
-    postData := '{'
-        . '"cpu_hash": "' . deviceCodeV6.cpu_hash . '",'
-        . '"uuid_hash": "' . deviceCodeV6.uuid_hash . '",'
-        . '"bios_hash": "' . deviceCodeV6.bios_hash . '",'
-        . '"board_hash": "' . deviceCodeV6.board_hash . '",'
-        . '"disk_hash": "' . deviceCodeV6.disk_hash . '",'
-        . '"guid_hash": "' . deviceCodeV6.guid_hash . '"'
-        . '}'
-    ; 发送请求
-    try {
-        http := ComObject("WinHttp.WinHttpRequest.5.1")
-        http.Open("POST", "https://doropay.top/api/blacklist/check", false)
-        http.SetRequestHeader("Content-Type", "application/json")
-        http.Send(postData)
-        ; 解析响应
-        if http.Status = 200 {
-            response := http.ResponseText
-            if InStr(response, '"blacklisted": true') {
-                return false
-            }
-        }
-    } catch as e {
-    } catch {
-    }
     return true
 }
 AutoStartDoro() {
@@ -1956,170 +1891,11 @@ ParseDateTimeString(dateTimeStr) {
     }
     return ""
 }
-;tag Mirror酱更新检查子函数
+;tag Mirror酱更新检查已移除（社区免费版，仅通过 GitHub 更新）
 CheckForUpdate_Mirror(isManualCheck, channelInfo, &latestObjMapOut) {
-    global currentVersion, g_numeric_settings
-    sourceName := "Mirror酱"
-    latestObjMapOut.Set("message", "")
+    latestObjMapOut.Set("message", "Mirror酱渠道已移除")
     latestObjMapOut.Set("foundNewVersion", false)
-    AddLog(sourceName . " 更新检查：开始 (" . channelInfo . " 渠道)……")
-    if Trim(g_numeric_settings.Get("MirrorCDK")) == "" {
-        latestObjMapOut.Set("message", "Mirror酱 CDK 为空，无法检查更新")
-        if (isManualCheck) {
-            MsgBox(latestObjMapOut.Get("message"), sourceName . "检查更新错误", "IconX")
-        }
-        AddLog(latestObjMapOut.Get("message"), "Red")
-        return false
-    }
-    apiUrl := "https://mirrorchyan.com/api/resources/DoroHelper/latest?"
-    apiUrl .= "cdk=" . g_numeric_settings.Get("MirrorCDK")
-    if (g_numeric_settings.Get("UpdateChannels") == "测试版") {
-        apiUrl .= "&channel=beta"
-    }
-    HttpRequest := ""
-    ResponseStatus := 0
-    ResponseBody := ""
-    try {
-        HttpRequest := ComObject("WinHttp.WinHttpRequest.5.1")
-        HttpRequest.Open("GET", apiUrl, false)
-        HttpRequest.SetRequestHeader("User-Agent", "DoroHelper-AHK-Script/" . currentVersion)
-        HttpRequest.Send()
-        ResponseStatus := HttpRequest.Status
-        if (ResponseStatus == 200) {
-            ResponseBody := HttpRequest.ResponseBody
-        }
-    } catch as e {
-        latestObjMapOut.Set("message", sourceName . " API 请求失败: " . e.Message)
-        if (isManualCheck) {
-            MsgBox(latestObjMapOut.Get("message"), sourceName . "检查更新错误", "IconX")
-        }
-        AddLog(latestObjMapOut.Get("message"), "Red")
-        return false
-    }
-    ResponseTextForJson := ""
-    if (ResponseStatus == 200) {
-        ; 检查 ResponseBody 是否为 SafeArray 类型 (二进制数据)
-        if (IsObject(ResponseBody) && (ComObjType(ResponseBody) & 0x2000)) {
-            try {
-                dataPtr := 0, lBound := 0, uBound := 0
-                DllCall("OleAut32\SafeArrayGetLBound", "Ptr", ComObjValue(ResponseBody), "UInt", 1, "Int64*", &lBound)
-                DllCall("OleAut32\SafeArrayGetUBound", "Ptr", ComObjValue(ResponseBody), "UInt", 1, "Int64*", &uBound)
-                actualSize := uBound - lBound + 1
-                if (actualSize > 0) {
-                    DllCall("OleAut32\SafeArrayAccessData", "Ptr", ComObjValue(ResponseBody), "Ptr*", &dataPtr)
-                    ResponseTextForJson := StrGet(dataPtr, actualSize, "UTF-8")
-                    DllCall("OleAut32\SafeArrayUnaccessData", "Ptr", ComObjValue(ResponseBody))
-                } else {
-                    AddLog(sourceName . " 警告: SafeArray 大小为0或无效")
-                }
-            } catch as e_sa {
-                AddLog(sourceName . " 错误: 处理 ResponseBody (SafeArray) 失败: " . e_sa.Message . ". 类型: " . ComObjType(ResponseBody, "Name"), "Red")
-                ResponseTextForJson := HttpRequest.ResponseText
-                AddLog(sourceName . " 警告: SafeArray 处理失败，回退到 HttpRequest.ResponseText，可能存在编码问题")
-            }
-        }
-        ; 如果 ResponseBody 是其他类型的 COM 对象 (例如 ADODB.Stream 可能在某些旧系统或特定配置下返回)
-        else if (IsObject(ResponseBody)) {
-            AddLog(sourceName . " 警告: ResponseBody 是对象但不是 SafeArray (类型: " . ComObjType(ResponseBody, "Name") . ")，尝试 ADODB.Stream")
-            try {
-                Stream := ComObject("ADODB.Stream")
-                Stream.Type := 1
-                Stream.Open()
-                Stream.Write(ResponseBody)
-                Stream.Position := 0
-                Stream.Type := 2
-                Stream.Charset := "utf-8"
-                ResponseTextForJson := Stream.ReadText()
-                Stream.Close()
-            } catch as e_adodb {
-                AddLog(sourceName . " 错误: ADODB.Stream 处理 ResponseBody (非 SafeArray COM 对象) 失败: " . e_adodb.Message, "Red")
-                ResponseTextForJson := HttpRequest.ResponseText
-                AddLog(sourceName . " 警告: ADODB.Stream 失败，回退到 HttpRequest.ResponseText，可能存在编码问题")
-            }
-        }
-        ; 如果 ResponseBody 既不是 COM 对象也不是 SafeArray，直接使用 ResponseText (可能存在编码问题)
-        else {
-            AddLog(sourceName . " 警告: ResponseBody 不是 COM 对象，或请求未成功。将直接使用 HttpRequest.ResponseText")
-            ResponseTextForJson := HttpRequest.ResponseText
-        }
-        try {
-            JsonData := Json.Load(&ResponseTextForJson)
-            if (!IsObject(JsonData)) {
-                latestObjMapOut.Set("message", sourceName . " API 响应格式错误")
-                if (isManualCheck) MsgBox(latestObjMapOut.Get("message"), sourceName . "检查更新错误", "IconX")
-                    AddLog(latestObjMapOut.Get("message") . ". ResponseText (前200字符): " . SubStr(ResponseTextForJson, 1, 200), "Red")
-                return false
-            }
-            jsonDataCode := JsonData.Get("code", -1)
-            potentialData := JsonData.Get("data", unset)
-            if (jsonDataCode != 0) {
-                errorMsg := sourceName . " API 返回错误。 Code: " . jsonDataCode . "."
-                if (JsonData.Has("msg") && Trim(JsonData.Get("msg")) != "") {
-                    errorMsg .= " 消息: " . JsonData.Get("msg")
-                } else {
-                    errorMsg .= " (API未提供详细错误消息)"
-                }
-                latestObjMapOut.Set("message", errorMsg)
-                if (isManualCheck) {
-                    MsgBox(latestObjMapOut.Get("message"), sourceName . "检查更新错误", "IconX")
-                }
-                AddLog(errorMsg, "Red")
-                return false
-            }
-            if (!IsSet(potentialData) || !IsObject(potentialData)) {
-                errorMsg := sourceName . " API 响应成功 (code 0)，但 'data' 字段缺失或非对象类型"
-                if (JsonData.Has("msg") && Trim(JsonData.Get("msg")) != "") {
-                    errorMsg .= " API 消息: " . JsonData.Get("msg")
-                }
-                latestObjMapOut.Set("message", errorMsg)
-                if (isManualCheck) {
-                    MsgBox(latestObjMapOut.Get("message"), sourceName . "检查更新错误", "IconX")
-                }
-                AddLog(errorMsg . " 取回的 'data' 类型: " . Type(potentialData), "Red")
-                return false
-            }
-            mirrorData := potentialData
-            latestObjMapOut.Set("version", mirrorData.Get("version_name", ""))
-            latestObjMapOut.Set("change_notes", mirrorData.Get("release_note", "无更新说明"))
-            latestObjMapOut.Set("download_url", mirrorData.Get("url", ""))
-            if latestObjMapOut.Get("version") == "" {
-                latestObjMapOut.Set("message", sourceName . " API 响应中版本信息为空")
-                if (isManualCheck) {
-                    MsgBox(latestObjMapOut.Get("message"), sourceName . "检查更新错误", "IconX")
-                }
-                AddLog(sourceName . " 更新检查：API响应中版本信息为空", "Red")
-                return false
-            }
-            AddLog(sourceName . " 更新检查：获取到版本 " . latestObjMapOut.Get("version"))
-            if (CompareVersionsSemVer(latestObjMapOut.Get("version"), currentVersion) > 0) {
-                latestObjMapOut.Set("foundNewVersion", true)
-                AddLog(sourceName . " 版本比较：发现新版本", "Green")
-            } else {
-                latestObjMapOut.Set("foundNewVersion", false)
-                AddLog(sourceName . " 版本比较：当前已是最新或更新", "Green")
-            }
-        } catch as e {
-            errorDetails := "错误类型: " . Type(e) . ", 消息: " . e.Message
-            if e.HasProp("What") errorDetails .= "`n触发对象/操作: " . e.What
-                if e.HasProp("File") errorDetails .= "`n文件: " . e.File
-                    if e.HasProp("Line") errorDetails .= "`n行号: " . e.Line
-                        latestObjMapOut.Set("message", "处理 " . sourceName . " JSON 数据时发生内部错误: `n" . errorDetails)
-            if (isManualCheck) MsgBox(latestObjMapOut.Get("message"), sourceName . "检查更新错误", "IconX")
-                AddLog(sourceName . " 更新检查：处理JSON时发生内部错误: " . errorDetails, "Red")
-            AddLog(sourceName . " 相关的 ResponseTextForJson (前1000字符): " . SubStr(ResponseTextForJson, 1, 1000))
-            return false
-        }
-    } else {
-        errorResponseText := HttpRequest.ResponseText
-        responseTextPreview := SubStr(errorResponseText, 1, 300)
-        latestObjMapOut.Set("message", sourceName . " API 请求失败！`n状态码: " . ResponseStatus . "`n响应预览:`n" . responseTextPreview)
-        if (isManualCheck) {
-            MsgBox(latestObjMapOut.Get("message"), sourceName . " API 错误", "IconX")
-        }
-        AddLog(latestObjMapOut.Get("message"), "Red")
-        return false
-    }
-    return true
+    return false
 }
 ;tag Github更新检查子函数
 CheckForUpdate_Github(isManualCheck, channelInfo, &latestObjMapOut) {
@@ -2454,151 +2230,9 @@ GetUserLocaleName() {
     LocaleName := StrGet(LocaleBuffer, "UTF-16")
     return LocaleName
 }
-;tag 赞助界面
-MsgSponsor(*) {
-    global guiSponsor
-    global g_PriceMap, g_DefaultRegionPriceData, g_MembershipLevels, LocaleName, g_numeric_settings
-    ; 检查用户组数据源是否为 API
-    if g_numeric_settings["GroupDataSource"] != "API" {
-        result := MsgBox("当前「用户组数据源」设置为 " . g_numeric_settings["GroupDataSource"] . "，建议改为「API」以获得更快的响应速度和更准确的会员信息。`n`n是否现在前往设置中修改？", "数据源提示", "YesNo Iconi")
-        if result = "Yes" {
-            ShowSetting("Settings")
-            return
-        }
-    }
-    if g_numeric_settings["UserGroup"] = "普通用户" {
-        MsgBox("我已知晓：`n1、会员功能与设备绑定，更换设备后需要重新赞助。`n2、赞助并不构成实际上的商业行为，如果遇到不可抗力因素，作者有权随时停止维护，最终解释权归作者所有`n3、赞助完后需要点击底部的「生成信息」然后按ctrl+v发送给作者登记。发送的将会是一段代码和赞助截图，而不是接下来的文本`n4、只需要在一个渠道发送录入后的文本，不要每个渠道都发一遍。`n5、录入会在24小时内完成，届时会在对应渠道发送「已录入」的信息，根据网络延迟，会员资格会在收到信息后的5分钟内生效。因此在规定时间内，请不要催促作者，谢谢。", "赞助说明", "iconi")
-    }
-    guiSponsor := Gui("+Resize +Owner" doroGui.Hwnd, "赞助")
-    guiSponsor.Opt("+DPIScale")
-    guiSponsor.Tips := GuiCtrlTips(guiSponsor)
-    guiSponsor.SetFont('s10', 'Microsoft YaHei UI')
-    ; 获取当前用户会员信息
-    ; ========== 赞助内容（精简版） ==========
-    guiSponsor.Add("Text", "w400 +0x0100 Wrap Center", "感谢您对 DoroHelper 的支持！`n您的支持是我持续维护的动力")
-    guiSponsor.Add("Text", "w400 h10")
-    ; 主按钮
-    btnOnlineSponsor := guiSponsor.Add("Button", "xs w400 h40", "网页赞助")
-    btnOnlineSponsor.SetFont("bold s12")
-    guiSponsor.Add("Text", "w400 h10")
-    ; 次要按钮
-    btnUpgradeV6 := guiSponsor.Add("Button", "xs w128 h30", "迁移会员到MDA")
-    btnUpgradeV6.SetFont("bold s10")
-    btnQueryOnline := guiSponsor.Add("Button", "x+3 yp w128 h30", "查询会员")
-    btnQueryOnline.SetFont("bold s10")
-    btnRedeemCode := guiSponsor.Add("Button", "x+3 yp w128 h30", "兑换福利码")
-    btnRedeemCode.SetFont("bold s10")
-    ; === 控件交互逻辑 ===
-    btnOnlineSponsor.OnEvent("Click", OpenOnlineSponsor)
-    btnUpgradeV6.OnEvent("Click", UpgradeV6Online)
-    btnQueryOnline.OnEvent("Click", (*) => Run("https://doropay.top/?tab=query"))
-    btnRedeemCode.OnEvent("Click", OpenRedeemPage)
-    guiSponsor.Show("AutoSize Center")
-}
-;tag 在线赞助（打开浏览器自助录入页面）
-OpenOnlineSponsor(*) {
-    global g_numeric_settings
-    ; 构建URL，只传设备信息和用户ID
-    baseURL := "https://doropay.top"
-    params := ""
-    ; 用户ID（可选预填）
-    userID := g_numeric_settings.Has("UserID") ? g_numeric_settings["UserID"] : ""
-    if (userID != "")
-        params .= "&uid=" . userID
-    ; V6设备码（必须传）
-    try {
-        deviceCodeV6 := GenerateDeviceCodeV6Safe()
-        params .= "&cpu=" . deviceCodeV6.cpu_hash
-        params .= "&uuid=" . deviceCodeV6.uuid_hash
-        params .= "&bios=" . deviceCodeV6.bios_hash
-        params .= "&board=" . deviceCodeV6.board_hash
-        params .= "&disk=" . deviceCodeV6.disk_hash
-        params .= "&guid=" . deviceCodeV6.guid_hash
-    } catch {
-        ; 生成失败时跳过，用户在网页手动填
-    }
-    ; 拼接URL
-    if (params != "")
-        fullURL := baseURL . "?" . SubStr(params, 2)  ; 去掉开头的 &
-    else
-        fullURL := baseURL
-    Run(fullURL)
-}
-;tag V4迁移到MDA（在线录入V6设备信息）
-UpgradeV6Online(*) {
-    global g_numeric_settings
-    ; 先查询V4会员信息，确认是会员
-    AddLog("正在查询V4会员信息……", "Blue")
-    v4Hash := GenerateDeviceCode()
-    v4Result := QueryV4MemberByHash(v4Hash)
-    if (!v4Result.found) {
-        result := MsgBox("未查询到当前设备的 DoroHelper V4 会员信息，无法执行旧会员迁移。`n`n如果您已经在 DoroPay / MDA 开通过会员，请直接在 MDA 中使用；DoroHelper 已停止维护，不再作为新会员验证入口。`n`n是否打开 DoroPay 查询页面确认当前会员状态？", "无法迁移", "YesNo Icon!")
-        if (result = "Yes")
-            Run("https://doropay.top/?tab=query")
-        return
-    }
-    AddLog("查询到 DoroHelper V4 会员，正在引导迁移到 MDA", "Green")
-    ; 构建URL
-    baseURL := "https://doropay.top"
-    params := "tab=upgrade"
-    ; 用户ID（可选预填）
-    userID := g_numeric_settings.Has("UserID") ? g_numeric_settings["UserID"] : ""
-    if (userID != "")
-        params .= "&uid=" . userID
-    ; V6设备码
-    try {
-        deviceCodeV6 := GenerateDeviceCodeV6Safe()
-        params .= "&cpu=" . deviceCodeV6.cpu_hash
-        params .= "&uuid=" . deviceCodeV6.uuid_hash
-        params .= "&bios=" . deviceCodeV6.bios_hash
-        params .= "&board=" . deviceCodeV6.board_hash
-        params .= "&disk=" . deviceCodeV6.disk_hash
-        params .= "&guid=" . deviceCodeV6.guid_hash
-    } catch as e {
-        MsgBox("当前设备信息生成失败，无法自动打开迁移页。`n`n这不是会员失效；请在 MDA 或 DoroPay 页面中重新操作。`n`n错误信息: " . e.Message, "迁移到 MDA", "Iconx")
-        return
-    }
-    fullURL := baseURL . "?" . params
-    Run(fullURL)
-    MsgBox("已打开 DoroPay 的 MDA 迁移页面。`n`n此操作只会将当前设备绑定到 DoroPay/MDA，不会在 DoroHelper 中开通或验证新会员。`n完成迁移后，请在 MDA 中查看和使用会员功能。", "迁移会员到 MDA", "Iconi")
-}
-;tag 根据V4哈希查询会员信息
-QueryV4MemberByHash(v4Hash) {
-    try {
-        members := FetchAndParseGroupData(4)
-        info := GetMembershipInfoForHash(v4Hash, members)
-        if (info["UserLevel"] > 0 || info["RemainingValue"] > 0) {
-            return { found: true, account_value: info["RemainingValue"] }
-        }
-        return { found: false, account_value: "0" }
-    } catch as e {
-        AddLog("查询 DoroHelper V4 会员失败: " . e.Message, "Red")
-        return { found: false, account_value: "0" }
-    }
-}
-;tag 兑换福利码（打开兑换页面，隐性传入设备码）
-OpenRedeemPage(*) {
-    global g_numeric_settings
-    baseURL := "https://doropay.top"
-    params := "&tab=redeem"
-    ; 用户ID
-    userID := g_numeric_settings.Has("UserID") ? g_numeric_settings["UserID"] : ""
-    if (userID != "")
-        params .= "&uid=" . userID
-    ; V6设备码（隐性传入，用于非会员自动创建记录）
-    try {
-        deviceCodeV6 := GenerateDeviceCodeV6Safe()
-        params .= "&cpu=" . deviceCodeV6.cpu_hash
-        params .= "&uuid=" . deviceCodeV6.uuid_hash
-        params .= "&bios=" . deviceCodeV6.bios_hash
-        params .= "&board=" . deviceCodeV6.board_hash
-        params .= "&disk=" . deviceCodeV6.disk_hash
-        params .= "&guid=" . deviceCodeV6.guid_hash
-    } catch {
-        ; 生成失败时跳过，用户在网页手动填
-    }
-    fullURL := baseURL . "?" . SubStr(params, 2)
-    Run(fullURL)
+;tag 关于界面
+MsgAbout(*) {
+    MsgBox("DoroHelper-AI`n`n基于 DoroHelper 的开源二次开发版本`n由某不知名 AI 自主迭代维护`n`n原项目: https://github.com/1204244136/DoroHelper`n本仓库: https://github.com/min09577/DoroHelper-AI`n`n许可证: AGPL-3.0`n本版本完全免费，无付费会员功能", "关于 DoroHelper-AI", "Iconi")
 }
 SetEditPlaceholder(editCtrl, placeholderText) {
     static EM_SETCUEBANNER := 0x1501
@@ -3220,15 +2854,12 @@ FetchAndParseGroupData(version := 4) {
     local groupFileName := "GroupArrayV" . version . ".json"
     ; 定义所有可用的镜像站点
     local mirrors := Map(
-        "Gitee", "https://gitee.com/con_sul/DoroHelper/raw/main/group/" . groupFileName,
-        "GitHub", "https://raw.githubusercontent.com/1204244136/DoroHelper/refs/heads/main/group/" . groupFileName,
-        "jsDelivr", "https://cdn.jsdelivr.net/gh/1204244136/DoroHelper@main/group/" . groupFileName
+        "GitHub", "https://raw.githubusercontent.com/min09577/DoroHelper-AI/refs/heads/main/group/" . groupFileName,
+        "jsDelivr", "https://cdn.jsdelivr.net/gh/min09577/DoroHelper-AI@main/group/" . groupFileName
     )
-    if (version != 4) {
-        mirrors["API"] := "https://doropay.top/api/members/v" . version
-    }
+    ; 社区免费版本，移除 API 源
     ; 获取用户选择的源或使用默认值
-    local preferredSource := g_numeric_settings.Has("GroupDataSource") ? g_numeric_settings["GroupDataSource"] : "API"
+    local preferredSource := g_numeric_settings.Has("GroupDataSource") ? g_numeric_settings["GroupDataSource"] : "GitHub"
     local sourceOrder := []
     ; 构建镜像访问顺序：优先使用用户选择的源，然后尝试其他源
     sourceOrder.Push(preferredSource)
@@ -3527,18 +3158,10 @@ CheckUserGroup(forceUpdate := false) {
     cacheTimestamp := A_TickCount
     return highestMembership
 }
-;tag 提示用户迁移到 MDA
+;tag MDA迁移提示已移除（社区免费版本）
 PromptUpgradeToV6() {
-    result := MsgBox(
-        "检测到当前设备仍可匹配 DoroHelper 旧版 V4 会员。`n`n" .
-        "DoroHelper 已停止维护，后续会员功能请迁移到 MDA 使用。`n" .
-        "迁移只会把当前设备绑定到 DoroPay/MDA，不会在 DoroHelper 中开通或验证新会员。`n`n" .
-        "是否现在打开 DoroPay 的 MDA 迁移页面？",
-        "迁移会员到 MDA",
-        "YesNo Iconi"
-    )
-    if (result = "Yes")
-        UpgradeV6Online()
+    ; 社区免费版本，无会员迁移功能
+    return
 }
 ;tag 复制V6信息（带验证）
 CopyV6WithValidation(userIDEdit, deviceCodeV6, *) {
@@ -3882,16 +3505,10 @@ UncheckAllTasks(*) {
     }
 }
 ;tag 展示MirrorCDK输入框
+; ShowMirror 已移除（Mirror酱相关功能已删除）
 ShowMirror(Ctrl, Info) {
-    ; 正确的写法是获取控件的 .Value 属性（或 .Text 属性）
-    g_numeric_settings["DownloadSource"] := cbDownloadSource.Text
-    if Ctrl.Value = 2 {
-        MirrorText.Visible := true
-        MirrorEditControl.Visible := true
-    } else {
-        MirrorText.Visible := false
-        MirrorEditControl.Visible := false
-    }
+    return
+}
 }
 ;tag 隐藏所有二级设置
 HideAllSettings() {
@@ -3923,18 +3540,16 @@ ShowSetting(pageName) {
 ;region 消息辅助函数
 ;tag 启动告知
 ShowMigrationNotice(*) {
-    noticeGui := Gui(, "MDA 新版下载")
+    noticeGui := Gui(, "DoroHelper-AI")
     noticeGui.Opt("+AlwaysOnTop")
     noticeGui.SetFont('s11', 'Microsoft YaHei UI')
-    noticeGui.Add("Text", "w420", "DoroHelper 已全面升级为 MDA（Maa Doro Assistant）！")
-    noticeGui.Add("Text", "w420", "新版本支持后台运行、全分辨率、任务自由排序等功能，欢迎下载体验。")
+    noticeGui.Add("Text", "w420", "欢迎使用 DoroHelper-AI！")
+    noticeGui.Add("Text", "w420", "本版本是社区免费维护版本，由某不知名 AI 自主迭代更新。")
     noticeGui.Add("Text", "w420", "")
-    noticeGui.Add("Text", "w420", "MDA-win-x86_64-v1.1.2 下载地址：")
-    noticeGui.Add("Link", "w420", '百度网盘：<a href="https://pan.baidu.com/s/1X4_vJ3ei9fiayRWHpI0f9A?pwd=bed7">https://pan.baidu.com/s/1X4_vJ3ei9fiayRWHpI0f9A?pwd=bed7</a>  提取码：bed7')
-    noticeGui.Add("Link", "w420", '夸克网盘：<a href="https://pan.quark.cn/s/9a30ca1aabe7">https://pan.quark.cn/s/9a30ca1aabe7</a>  提取码：Cprn')
-    noticeGui.Add("Link", "w420", 'GitHub：<a href="https://github.com/1204244136/MDA/releases/latest">https://github.com/1204244136/MDA/releases/latest</a>')
+    noticeGui.Add("Link", "w420", '仓库地址：<a href="https://github.com/min09577/DoroHelper-AI">https://github.com/min09577/DoroHelper-AI</a>')
     noticeGui.Add("Text", "w420", "")
-    noticeGui.Add("Text", "w420 cGray", "旧版本将停止维护但仍可正常使用。感谢大家的支持！")
+    noticeGui.Add("Link", "w420", '原项目 MDA：<a href="https://github.com/1204244136/MDA/releases/latest">https://github.com/1204244136/MDA</a>')
+    noticeGui.Add("Text", "w420", "")
     noticeGui.Add("Button", "w100 x330", "知道了").OnEvent("Click", (*) => noticeGui.Destroy())
     noticeGui.OnEvent("Close", (*) => noticeGui.Destroy())
     noticeGui.Show()
@@ -4015,14 +3630,8 @@ Advertisement(*) {
     adTitle := "AD"
     MyAd := Gui(, adTitle)
     MyAd.SetFont('s10', 'Microsoft YaHei UI')
-    MyAd.Add("Text", "w300", "====广告位招租====")
-    MyAd.Add("Text", , "可以通过赞助免除启动时的广告，设置-移除启动广告")
-    MyAd.Add("Text", , "详情见左上角的「赞助」按钮")
-    MyAd.Add("Link", , '<a href="https://pan.baidu.com/s/1pAq-o6fKqUPkRcgj_xVcdA?pwd=2d1q">ahk版和exe版的网盘下载链接</a>')
     MyAd.Add("Link", , '<a href="https://nikke.hayasa.link/">====Nikke CDK Tool====</a>')
-    MyAd.Add("Text", "w500", "一个用于管理《胜利女神：NIKKE》CDK 的现代化工具网站，支持支持国际服、国服、港澳台服多服务器、多账号的CDK一键兑换")
-    MyAd.Add("Link", , '<a href="https://mirrorchyan.com/zh/get-start?source=doro-github-release">===Mirror酱===</a>')
-    MyAd.Add("Text", "w500", "Mirror酱是一个第三方应用分发平台，可以让你更方便地下载和更新应用现已支持 DoroHelper 的自动更新下载，和DoroHelper本身的会员功能无关")
+    MyAd.Add("Text", "w500", "一个用于管理《胜利女神：NIKKE》CDK 的现代化工具网站，支持国际服、国服、港澳台服多服务器、多账号的CDK一键兑换")
     MyAd.Show()
     Sleep 500
     if not WinExist(adTitle) {
@@ -4155,40 +3764,10 @@ AddCheckboxSetting(guiObj, settingKey, displayText, options := "", addToTaskList
     ;返回创建的控件对象 (可选，如果需要进一步操作)
     return cbCtrl
 }
-;通用函数，用于切换 g_settings Map 中的设置值，并进行会员等级检测
+;通用函数，用于切换 g_settings Map 中的设置值（社区免费版，已移除会员等级检测）
 ToggleSetting(settingKey, displayText, guiCtrl, *) {
     global g_settings, g_numeric_settings
-    ; 如果用户正在尝试勾选本选项 (即当前复选框的值将从0变为1)
-    if (guiCtrl.Value == 0) {
-        requiredLevel := 0
-        memberType := ""
-        ; 检查 displayText 是否包含会员等级信息
-        if InStr(displayText, "🎁") {
-            requiredLevel := 1 ;会员合并
-            memberType := "金Doro会员"
-        } else if InStr(displayText, "[银Doro]") {
-            requiredLevel := 2
-            memberType := "银Doro会员"
-        } else if InStr(displayText, "[铜Doro]") {
-            requiredLevel := 1
-            memberType := "铜Doro会员"
-        }
-        ; 如果检测到会员限制
-        if (requiredLevel > 0) {
-            ; 检查当前用户等级是否足够
-            if (g_numeric_settings["UserLevel"] < requiredLevel) {
-                MsgBox("当前用户组 (" . g_numeric_settings["UserGroup"] . ") 不足，需要 " . memberType . " 才能使用此功能。请点击左上角的“赞助”按钮升级会员组。", "会员功能限制", "")
-                ; 阻止勾选操作：在 Click 事件中，如果返回0或不修改控件值，将阻止状态改变
-                ; 但AutoHotkey GUI的Checkbox控件在Click事件中已经改变了值，所以需要手动改回去
-                guiCtrl.Value := 0
-                g_settings[settingKey] := 0
-                AddLog("用户尝试勾选限制功能 '" . displayText . "' 失败，等级不足。", "Red")
-                WriteSettings()
-                return
-            }
-        }
-    }
-    ; 如果通过了会员检测 (或没有会员限制)，则正常切换值
+    ; 社区免费版本，移除会员限制，直接切换
     g_settings[settingKey] := 1 - g_settings[settingKey]
     ; 每次勾选后都保存数据
     WriteSettings()
@@ -4228,32 +3807,16 @@ CheckAccountLimit(currentWinID) {
     if (alreadyCounted) {
         return true
     }
-    ; 确定限制数量
-    maxInstances := 2
-    userLevel := g_numeric_settings.Get("UserLevel", 0)
-    ; UserLevel 3 对应 金Doro
-    if (userLevel >= 3) {
-        maxInstances := 3
-    }
-    ; UserLevel 4 对应 金Doro企业版
-    if (userLevel >= 4) {
-        maxInstances := 10
-    }
-    ; 检查当前已运行的实例数量（去空后计算）
+    ; 社区免费版本，不限制实例数量
     currentCount := 0
     for id in idList {
         if (id != "")
             currentCount++
     }
-    if (currentCount >= maxInstances) {
-        userType := (userLevel >= 4) ? "金Doro企业版" : "普通/个人会员"
-        MsgBox("今日本设备运行的游戏实例已达上限！`n`n当前用户组: " userType "`n今日限制: " maxInstances " 个`n已运行: " currentCount " 个`n`n赞助可以增加这个上限", "运行限制", "IconX")
-        return false
-    }
     ; 记录新的winID
     newIDs := (savedIDs = "") ? String(currentWinID) : savedIDs "|" String(currentWinID)
     IniWrite(newIDs, cacheFile, "System", "SessionKeys")
-    AddLog("新游戏实例已记录 (" (currentCount + 1) "/" maxInstances ")")
+    AddLog("新游戏实例已记录 (" (currentCount + 1) ")")
     return true
 }
 ;endregion 数据辅助函数
@@ -7008,10 +6571,6 @@ EventLargeMinigame() {
 }
 EventLargeMinigameX(*) {
     Initialization()
-    if g_numeric_settings["UserLevel"] < 3 {
-        MsgBox("当前用户组不支持任务(" A_ThisFunc ")，请点击赞助按钮升级会员组")
-        return
-    }
     AddLog("开始小游戏刷印章，如有需暂停请手动停止")
     FindText().PicLib("|<小游戏·红圈>FF5E5C-0.90$70.00000Ts000000000zzz00000000zzzzU000000Dzzzzk000003zzzzzk00000TzzzzzU00007zzzzzzU0000zzzzzzz00007zzzzzzz0001zzzzzzzy000Dzzzzzzzw001zzzzzzzzs00Dzzzzzzzzk00zzzzzzzzz007zzzzzzzzy00zzzzzzzzzw03zzzzzzzzzk0TzzzzzzzzzU3zzzzzzzzzz0Dzzzzzzzzzw1zzzzzzzzzzs7zzzz03zzzzUzzzzk03zzzz3zzzw003zzzwDzzzU007zzzlzzzw000Dzzz7zzzU000TzzyTzzw0000zzztzzzk0003zzzbzzy00007zzyzzzs0000TzzvzzzU0001zzzzzzw00003zzzzzzk0000Dzzzzzz00000zzzzzzw00003zzzzzzk0000Dzzzzzz00000zzzzzzy00007zzzzzzs0000TzzzzzzU0001zzzbzzz0000DzzyTzzw0000zzztzzzs0007zzzbzzzk000zzzyTzzz0003zzzkzzzz000zzzz3zzzy007zzzw7zzzy01zzzzUTzzzz0Tzzzy0zzzzzzzzzzk3zzzzzzzzzz07zzzzzzzzzs0TzzzzzzzzzU0zzzzzzzzzw01zzzzzzzzzU07zzzzzzzzy00Dzzzzzzzzk00Tzzzzzzzy000zzzzzzzzk001zzzzzzzy0003zzzzzzzk0007zzzzzzy0000Dzzzzzzk0000Dzzzzzw00000TzzzzzU00000Tzzzzs000000Tzzzy0000000Dzzz000000007zz00002", 1)
     loop {
@@ -7835,10 +7394,6 @@ TestMode(BtnTestMode, Info) {
 ;tag 爆裂模式
 BurstMode(*) {
     Initialization()
-    if g_numeric_settings["UserLevel"] < 3 {
-        MsgBox("当前用户组不支持任务(" A_ThisFunc ")，请点击赞助按钮升级会员组")
-        return
-    }
     g_numeric_settings["BurstModeValue"] := BurstModeEditControl.Value
     inputStr := BurstModeEditControl.Value
     if (inputStr = "") {
@@ -7936,10 +7491,6 @@ BurstMode(*) {
 }
 ;tag 自动推图
 AutoAdvance(*) {
-    if g_numeric_settings["UserLevel"] < 3 {
-        MsgBox("当前用户组不支持任务(" A_ThisFunc ")，请点击赞助按钮升级会员组")
-        return
-    }
     Initialization()
     ; 设置初始搜索方式（9代表查找从中心开始查找，之后逐渐开始从四个方向变换）
     k := 9
