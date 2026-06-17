@@ -105,7 +105,7 @@ flowchart LR
 
 ## 免责声明
 
-本项目仅供个人学习研究使用，严禁用于商业用途。除 Github 和下方 qq 群以外其他任何网站、社交平台中有关本项目的内容**均非本人发布**，若造成侵犯著作权、版权或违反网络安全法规等任何后果，均与本人无关。
+本项目仅供个人学习研究使用，严禁用于商业用途。本仓库 Github 以外其他任何网站、社交平台中有关本项目的内容**均非本人发布**，若造成侵犯著作权、版权或违反网络安全法规等任何后果，均与本人无关。
 
 使用任何脚本程序均有封号风险，请谨慎。
 
@@ -187,37 +187,6 @@ Doro 只是想让你少被该死的读条、闪光弹和重复劳动折磨。一
 打开 NIKKE 启动器。点击启动。等 NIKKE 主程序中央 SHIFT UP logo 出现之后，再切出来点击“DORO!”按钮。如果你看到鼠标开始在左下角连点，那就代表启动成功了。然后就可以悠闲地去泡一杯咖啡，或者刷一会儿手机，等待 Doro 完成工作了。
 
 也可以在游戏处在大厅界面时（有看板娘的页面）切出来点击“DORO!”按钮启动程序。
-
-## 反馈和改进
-
-加入[DoroHelper 反馈群](https://qm.qq.com/q/f0Q1yr7vzi)
-
-加入[Discord](https://discord.gg/f4rAWJVNJj)
-
-## 支持和鼓励
-
-知一一：前任作者[牢 H](https://github.com/kyokakawaii) 停更后，DoroHelper 的绝大部分维护和新功能的添加都是我在做，这耗费了我大量时间和精力，希望有条件的小伙伴们能支持一下
-
-### 国内
-
-<table>
-  <tr>
-<img alt="支付宝收款码" src="./img/alipay.png" width="200" height="200" />
-<img alt="微信收款码" src="./img/weixin.png" width="200" height="200" />
-  </tr>
-</table>
-
-### 国外(global)
-
-<table>
-  <tr>
-<img alt="全球收款码" src="./img/global.png" width="200" height="200" />
-  </tr>
-</table>
-
-以下为支持的平台：
-
-Hanpass|PandaRemit|WireBarley|GmoneyTrans|Debunk|PayForex|koala transfer|Sendly|GME
 
 ## 星标历程
 

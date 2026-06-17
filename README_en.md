@@ -105,7 +105,7 @@ Older versions are no longer maintained!
 
 ## Disclaimer
 
-This project is for personal learning and research use only and is strictly prohibited for commercial use. Any content related to this project on websites or social platforms other than Github and the QQ group below **is not published by me**. I am not responsible for any consequences such as copyright infringement or violation of network security regulations.
+This project is for personal learning and research use only and is strictly prohibited for commercial use. Any content related to this project on websites or social platforms other than Github **is not published by me**. I am not responsible for any consequences such as copyright infringement or violation of network security regulations.
 
 Using any script program carries the risk of account suspension, please proceed with caution.
 
@@ -187,37 +187,6 @@ Doro just wants you to suffer less from the damn loading screens, flashbangs, an
 Open the NIKKE Launcher. Click Start. Wait for the central SHIFT UP logo to appear on the NIKKE main program, then switch out and click the "**DORO!**" button. If you see the mouse start rapidly clicking in the bottom left corner, the launch was successful. Then you can comfortably brew a cup of coffee or scroll through your phone, waiting for Doro to finish the job.
 
 Alternatively, you can switch out and click the "**DORO!**" button while the game is at the Lobby screen (the page with the standing character).
-
-## Feedback and Improvement
-
-Join the [DoroHelper Feedback QQ Group](https://qm.qq.com/q/f0Q1yr7vzi)
-
-Join the [Discord](https://discord.gg/f4rAWJVNJj)
-
-## Support and Encouragement
-
-Zhuyi Yiyi: After the former author [Lao H](https://github.com/kyokakawaii) stopped updating, I have been doing the majority of the maintenance and new feature additions for DoroHelper. This has cost me a significant amount of time and energy, and I hope those who are able can offer some support.
-
-### Domestic (China)
-
-<table>
-  <tr>
-<img alt="Alipay QR Code" src="./img/alipay.png" width="200" height="200" />
-<img alt="WeChat Pay QR Code" src="./img/weixin.png" width="200" height="200" />
-  </tr>
-</table>
-
-### Global
-
-<table>
-  <tr>
-<img alt="Global QR Code" src="./img/global.png" width="200" height="200" />
-  </tr>
-</table>
-
-Currently available platforms：
-
-Hanpass|PandaRemit|WireBarley|GmoneyTrans|Debunk|PayForex|koala transfer|Sendly|GME
 
 ## Star History
 
