@@ -183,7 +183,7 @@ global g_numeric_settings := Map(
     "PreferredHttpRequest", "WinHttp.WinHttpRequest.5.1", ; HTTP 请求优先级
     "VerificationMethod", "V6",         ; 验证方式 (V6/V4)
     "UserID", "",                        ; 用户ID
-    "UserGroup", "普通用户",             ; 用户组
+    "UserGroup", "社区版",                 ; 用户组
     "UserLevel", 0                      ; 用户级别
 )
 ;tag 其他全局变量
@@ -213,7 +213,7 @@ BattleActive := 1
 LocaleName := GetUserLocaleName()
 ; 会员等级定义
 g_MembershipLevels := Map(
-    "普通用户", { monthlyCost: 0, userLevel: 0 },
+    "社区版", { monthlyCost: 0, userLevel: 0 },
     "铜Doro会员", { monthlyCost: 1, userLevel: 1 },
     "银Doro会员", { monthlyCost: 3, userLevel: 2 },
     "金Doro会员", { monthlyCost: 5, userLevel: 3 },
@@ -447,7 +447,7 @@ cbPreferredHttp.Text := g_numeric_settings["PreferredHttpRequest"]
 cbPreferredHttp.OnEvent("Change", (Ctrl, Info) => g_numeric_settings["PreferredHttpRequest"] := Ctrl.Text)
 g_settingPages["Settings"].Push(cbPreferredHttp)
 TextVerificationMethod := doroGui.Add("Text", "xs R1 +0x0100", "验证方式")
-doroGui.Tips.SetTip(TextVerificationMethod, "选择会员验证方式`nV6: 新版验证，支持硬盘更换(推荐)`nV4: 旧版验证，单设备码`nVerification method for membership")
+doroGui.Tips.SetTip(TextVerificationMethod, "用户组验证方式`nV6: 新版验证(推荐) | V4: 旧版验证")
 g_settingPages["Settings"].Push(TextVerificationMethod)
 cbVerificationMethod := doroGui.AddDropDownList("x+20 w80", ["V6", "V4"])
 cbVerificationMethod.Text := g_numeric_settings["VerificationMethod"]
@@ -799,14 +799,7 @@ btnBlablalink.OnEvent("Click", (*) => Run("https://www.blablalink.com/"))
 btnCDK := doroGui.Add("Button", "x+10 w80 h30", "CDK兑换")
 doroGui.Tips.SetTip(btnCDK, "Nikke CDK Exchange")
 btnCDK.OnEvent("Click", (*) => Run("https://nikke.hayasa.link/"))
-; 反馈qq群
-btnFeedbackQQ := doroGui.Add("Button", "x+10 w50 h30", "qq群")
-doroGui.Tips.SetTip(btnFeedbackQQ, "Join the feedback group")
-btnFeedbackQQ.OnEvent("Click", (*) => Run("https://qm.qq.com/q/ZhvLeKMO2q"))
-; 反馈 dc群
-btnFeedbackDC := doroGui.Add("Button", "x+10 w70 h30", "Discord")
-doroGui.Tips.SetTip(btnFeedbackDC, "Join the feedback group")
-btnFeedbackDC.OnEvent("Click", (*) => Run("https://discord.gg/f4rAWJVNJj"))
+; 社区版：移除原作者 QQ群/Discord 按钮
 ; 剧情模式
 TextStoryModeLabel := doroGui.Add("Text", "xp R1 xs+10 +0x0100", "剧情模式")
 doroGui.Tips.SetTip(TextStoryModeLabel, "自动点击对话选项，自动进行下一段剧情，自动auto`nAutomatically click dialogue options, automatically proceed to the next segment of the story, automatically start auto")
@@ -892,7 +885,7 @@ if A_UserName != "12042" {
 ;tag 广告（已禁用随启动弹出）
 ; 如果满足以下任一条件，则显示广告：
 ; 1. 未勾选关闭广告 (无论用户是谁)
-; 2. 是普通用户 (无论是否勾选了关闭广告，因为普通用户无法关闭)
+; 2. 是社区版用户 (无论是否勾选了关闭广告，因为社区版用户无法关闭)
 ; if (!g_settings["CloseAdvertisement"] OR g_numeric_settings["UserLevel"] < 1) {
 ;     Advertisement
 ; }
@@ -2751,7 +2744,7 @@ MatchDeviceCodeV6(currentCode, savedData) {
 ;tag 根据V6设备码获取会员信息
 GetMembershipInfoForDeviceV6(deviceCode, groupData) {
     local result := Map(
-        "MembershipType", "普通用户",
+        "MembershipType", "社区版",
         "UserLevel", 0,
         "RemainingValue", 0.0,
         "LastActiveDate", "19991231",
@@ -2841,7 +2834,7 @@ GetMembershipInfoSmart(deviceCode, groupDataV4, groupDataV6 := "") {
     }
     ; 都没匹配
     return { method: deviceCode.method, info: Map(
-        "MembershipType", "普通用户",
+        "MembershipType", "社区版",
         "UserLevel", 0,
         "RemainingValue", 0.0,
         "LastActiveDate", "19991231",
@@ -2913,7 +2906,7 @@ FetchAndParseGroupData(version := 4) {
 ;tag 根据哈希值从用户组数据中获取会员信息
 GetMembershipInfoForHash(targetHash, groupData) {
     local result := Map(
-        "MembershipType", "普通用户",
+        "MembershipType", "社区版",
         "UserLevel", 0,
         "RemainingValue", 0.0,      ; 新增字段
         "LastActiveDate", "19991231", ; 新增字段
@@ -2953,7 +2946,7 @@ GetMembershipInfoForHash(targetHash, groupData) {
 CalculateCurrentMembershipStatus(currentTier, accountValue, lastActiveDate) {
     global g_MembershipLevels
     local today := A_YYYY A_MM A_DD
-    local finalMembershipType := "普通用户"
+    local finalMembershipType := "社区版"
     local finalUserLevel := 0
     local finalRemainingValue := 0.0
     local virtualExpiryDate := "19991231"
@@ -3016,7 +3009,7 @@ CheckUserGroup(forceUpdate := false) {
     static legacyUpdatePromptShown := false ; 记录是否已提示过旧版用户码迁移
     ; 默认返回的普通用户状态
     local defaultUserGroupInfo := Map(
-        "MembershipType", "普通用户",
+        "MembershipType", "社区版",
         "UserLevel", 0,
         "RemainingValue", 0.0,
         "VirtualExpiryDate", "19991231",
@@ -3077,17 +3070,17 @@ CheckUserGroup(forceUpdate := false) {
                 calculatedInfo["HistoricalAccountValue"] := v6MatchResult["RemainingValue"]
                 highestMembership := calculatedInfo
                 v6Success := true
-                AddLog("✓ V6验证成功，匹配分数: " . v6MatchResult["MatchScore"] . "/100", "Green")
+                AddLog("用户组验证完成", "Green")
                 ; 如果需要静默更新硬盘信息
                 if (v6MatchResult["NeedUpdateDisk"]) {
                     AddLog("检测到硬盘变更，正在静默更新……", "Blue")
                     ; TODO: 实现静默更新硬盘哈希的逻辑
                 }
             } else {
-                AddLog("V6验证未通过，匹配分数: " . v6MatchResult["MatchScore"] . "/100 (阈值80)", "Yellow")
+                AddLog("用户组验证未匹配", "Yellow")
             }
         } catch as e {
-            AddLog("V6验证失败: " . e.Message . "，将尝试V4验证", "Yellow")
+            AddLog("V6验证失败: " . e.Message, "Yellow")
         }
     }
     ; ========== V4验证流程（V6失败或选择V4时的回退） ==========
@@ -3150,10 +3143,9 @@ CheckUserGroup(forceUpdate := false) {
             }
         }
     } else {
-        AddLog("当前用户组：普通用户 (免费用户)   验证方式: " . highestMembership["VerificationMethod"] . "   数据源: " . currentSource, "Blue")
+        AddLog("当前用户组：社区版用户", "Blue")
         try TraySetIcon("doro.ico")
     }
-    AddLog("欢迎加入反馈qq群584275905")
     ; 更新缓存
     cachedUserGroupInfo := highestMembership
     cacheTimestamp := A_TickCount
@@ -3316,7 +3308,7 @@ CheckUserGroupByHashForGUI(inputHash) {
     try {
         local verificationMethod := g_numeric_settings.Has("VerificationMethod") ? g_numeric_settings["VerificationMethod"] : "V6"
         local rawHashInfo := Map(
-            "MembershipType", "普通用户",
+            "MembershipType", "社区版",
             "UserLevel", 0,
             "RemainingValue", 0.0,
             "LastActiveDate", "19991231",
@@ -3348,7 +3340,7 @@ CheckUserGroupByHashForGUI(inputHash) {
             }
         }
         local memberInfo := Map(
-            "MembershipType", "普通用户",
+            "MembershipType", "社区版",
             "UserLevel", 0,
             "RemainingValue", 0.0,
             "VirtualExpiryDate", "19991231",
@@ -3402,7 +3394,7 @@ CheckUserGroupByHash(inputHash) {
     try {
         local verificationMethod := g_numeric_settings.Has("VerificationMethod") ? g_numeric_settings["VerificationMethod"] : "V6"
         local rawHashInfo := Map(
-            "MembershipType", "普通用户",
+            "MembershipType", "社区版",
             "UserLevel", 0,
             "RemainingValue", 0.0,
             "LastActiveDate", "19991231",
@@ -3434,7 +3426,7 @@ CheckUserGroupByHash(inputHash) {
             }
         }
         local memberInfo := Map( ; 默认值
-            "MembershipType", "普通用户",
+            "MembershipType", "社区版",
             "UserLevel", 0,
             "RemainingValue", 0.0,
             "VirtualExpiryDate", "19991231",
