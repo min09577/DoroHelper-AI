@@ -8,7 +8,13 @@
 
 PC 端日常任务清理助手。一键清理多项日常事务。支持除**国服**外的所有客户端。
 
-> **注意：** 本项目是基于 [DoroHelper](https://github.com/1204244136/DoroHelper)（原作者 [@1204244136](https://github.com/1204244136)）的二次开发版本，采用 AI 辅助维护。保留原 AGPL-3.0 许可证。
+> **中文** | 本项目是基于 [DoroHelper](https://github.com/1204244136/DoroHelper)（原作者 [@1204244136](https://github.com/1204244136)）的二次开发版本，采用 AI 辅助维护。保留原 AGPL-3.0 开源许可证，遵守其全部条款。
+>
+> **English** | This is a derivative of [DoroHelper](https://github.com/1204244136/DoroHelper) by [@1204244136](https://github.com/1204244136), maintained with AI assistance. The original AGPL-3.0 license is retained in full compliance.
+>
+> **日本語** | 本プロジェクトは [DoroHelper](https://github.com/1204244136/DoroHelper)（原作者 [@1204244136](https://github.com/1204244136)）の派生版です。AI 支援によりメンテナンスされています。元の AGPL-3.0 ライセンスを遵守しています。
+>
+> **한국어** | 이 프로젝트는 [DoroHelper](https://github.com/1204244136/DoroHelper) (원작자 [@1204244136](https://github.com/1204244136))의 파생 버전입니다. AI 지원으로 유지 관리되며, 원본 AGPL-3.0 라이선스를 완전히 준수합니다.
 
 <p align="center">
   <img alt="AutoHotkeyV2" src="https://img.shields.io/badge/AutoHotkeyV2-white?logo=AutoHotkey&logoColor=black">
@@ -17,36 +23,38 @@ PC 端日常任务清理助手。一键清理多项日常事务。支持除**国
   <br/>
   <img alt="commit" src="https://img.shields.io/github/commit-activity/m/min09577/DoroHelper-AI">
   <img alt="stars" src="https://img.shields.io/github/stars/min09577/DoroHelper-AI?style=social">
-  <a href="https://mirrorchyan.com/?source=doro-github-release" target="_blank"><img alt="mirrorc" src="https://img.shields.io/badge/Mirror%E9%85%B1-%239af3f6?logo=countingworkspro&logoColor=4f46e5"></a>
 </p>
 
 **[English Readme](README_en.md) | 中文说明**
 
 </div>
 
-## DoroHelper 已全面升级为 MDA
+---
 
-非常感谢大家一直以来对 DoroHelper 的支持与陪伴。
+## 关于本仓库
 
-在持续开发与维护的过程中，当前脚本的整体架构已经较为老旧，限制了后续功能扩展与长期维护的效率。因此，基于全新的 MaaFramework 框架，脚本已完成完整重写。新版脚本命名为 **MDA（Maa Doro Assistant）**。借助这一成熟且强大的社区工具，未来在修复问题与更新内容方面将更加高效、稳定。
+本仓库基于原 [DoroHelper](https://github.com/1204244136/DoroHelper) 代码进行二次开发与维护，借助 AI 工具提升开发效率与代码质量。原项目由以下贡献者接力完成：
 
-相比旧版本，新框架带来了一系列显著提升：
+- **@kyokakawaii** — DoroHelper 创始开发者（2024.07 ~ 2025.01）
+- **@知一一 / @1204244136** — 接手维护与功能迭代（2025.04 ~ 2026.05）
 
-- 全新 UI 设计，界面更加简洁美观，并原生支持多语言，可自由设置主题、配色与背景
-- 支持任务顺序自由调整，并提供更加丰富的细节配置选项
-- 支持游戏后台运行，使用体验更加灵活
-- 支持全分辨率运行，不再受限于特定分辨率
-- 支持 Linux、macOS 等操作系统，并兼容 aarch64 架构
+向他们致敬。
 
-### MDA 下载地址
+原 DoroHelper 已归档停止维护，作者另起新项目 [MDA](https://github.com/1204244136/MDA)。本仓库延续 DoroHelper 旧版代码线，独立维护。
+
+---
+
+## 原项目背景：DoroHelper 已全面升级为 MDA
+
+当前脚本基于较旧的架构，原作者已基于全新的 MaaFramework 框架完成重写，新版命名为 **MDA（Maa Doro Assistant）**。后续若有对原版新特性的需求，建议直接使用 MDA：
 
 |渠道|链接|
 |--|--|
 |GitHub|[https://github.com/1204244136/MDA/releases/latest](https://github.com/1204244136/MDA/releases/latest)|
-|百度网盘|[https://pan.baidu.com/s/1X4_vJ3ei9fiayRWHpI0f9A?pwd=bed7](https://pan.baidu.com/s/1X4_vJ3ei9fiayRWHpI0f9A?pwd=bed7)（提取码：bed7）|
-|夸克网盘|[https://pan.quark.cn/s/9a30ca1aabe7](https://pan.quark.cn/s/9a30ca1aabe7)（提取码：Cprn）|
 
-旧版本将停止维护但仍可正常使用。如果新版本未能符合你的使用习惯，也欢迎继续选择旧版本。
+新框架优势：全新 UI、多语言支持、后台运行、全分辨率兼容、跨平台（Linux/macOS/aarch64）。
+
+---
 
 ## 项目演进历史
 
@@ -98,14 +106,13 @@ flowchart LR
 
 ## 版本问题
 
-下方的功能介绍均针对最新版本，老版本的对应功能请查看[legacy-v0.1.22](https://github.com/1204244136/DoroHelper/tree/legacy-v0.1.22)分支处的自述文件。
-老版本已停止维护！
+下方的功能介绍均针对最新版本，老版本的对应功能请查看[legacy-v0.1.22](https://github.com/1204244136/DoroHelper/tree/legacy-v0.1.22)分支处的自述文件。老版本已停止维护！
 
 **⚠️ 为了各自生活的便利，请不要在公开场合发布本软件国服相关的修改版本，谢谢配合！**
 
 ## 免责声明
 
-本项目仅供个人学习研究使用，严禁用于商业用途。本仓库 Github 以外其他任何网站、社交平台中有关本项目的内容**均非本人发布**，若造成侵犯著作权、版权或违反网络安全法规等任何后果，均与本人无关。
+本项目仅供个人学习研究使用，严禁用于商业用途。本仓库为 [DoroHelper](https://github.com/1204244136/DoroHelper) 的派生版本，原始代码由原作者团队贡献。若造成侵犯著作权、版权或违反网络安全法规等任何后果，使用者自行承担。
 
 使用任何脚本程序均有封号风险，请谨慎。
 
@@ -184,9 +191,9 @@ Doro 只是想让你少被该死的读条、闪光弹和重复劳动折磨。一
 
 ## 步骤
 
-打开 NIKKE 启动器。点击启动。等 NIKKE 主程序中央 SHIFT UP logo 出现之后，再切出来点击“DORO!”按钮。如果你看到鼠标开始在左下角连点，那就代表启动成功了。然后就可以悠闲地去泡一杯咖啡，或者刷一会儿手机，等待 Doro 完成工作了。
+打开 NIKKE 启动器。点击启动。等 NIKKE 主程序中央 SHIFT UP logo 出现之后，再切出来点击"DORO!"按钮。如果你看到鼠标开始在左下角连点，那就代表启动成功了。然后就可以悠闲地去泡一杯咖啡，或者刷一会儿手机，等待 Doro 完成工作了。
 
-也可以在游戏处在大厅界面时（有看板娘的页面）切出来点击“DORO!”按钮启动程序。
+也可以在游戏处在大厅界面时（有看板娘的页面）切出来点击"DORO!"按钮启动程序。
 
 ## 星标历程
 
@@ -200,6 +207,5 @@ Doro 只是想让你少被该死的读条、闪光弹和重复劳动折磨。一
 
 ## 鸣谢
 
-代码参考
-
-[M9A](https://github.com/MAA1999/M9A)
+- 原项目作者：[@kyokakawaii](https://github.com/kyokakawaii)、[@1204244136](https://github.com/1204244136)
+- 代码参考：[M9A](https://github.com/MAA1999/M9A)

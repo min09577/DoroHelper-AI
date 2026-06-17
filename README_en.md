@@ -8,7 +8,13 @@
 
 A PC tool for clearing daily tasks. One-click cleaning of multiple daily chores. Supports all clients except the **Chinese Server**.
 
-> **Note:** This project is a derivative of [DoroHelper](https://github.com/1204244136/DoroHelper) (original author [@1204244136](https://github.com/1204244136)), maintained with AI assistance. The original AGPL-3.0 license is retained.
+> **中文** | 本项目是基于 [DoroHelper](https://github.com/1204244136/DoroHelper)（原作者 [@1204244136](https://github.com/1204244136)）的二次开发版本，采用 AI 辅助维护。保留原 AGPL-3.0 开源许可证，遵守其全部条款。
+>
+> **English** | This is a derivative of [DoroHelper](https://github.com/1204244136/DoroHelper) by [@1204244136](https://github.com/1204244136), maintained with AI assistance. The original AGPL-3.0 license is retained in full compliance.
+>
+> **日本語** | 本プロジェクトは [DoroHelper](https://github.com/1204244136/DoroHelper)（原作者 [@1204244136](https://github.com/1204244136)）の派生版です。AI 支援によりメンテナンスされています。元の AGPL-3.0 ライセンスを遵守しています。
+>
+> **한국어** | 이 프로젝트는 [DoroHelper](https://github.com/1204244136/DoroHelper) (원작자 [@1204244136](https://github.com/1204244136))의 파생 버전입니다. AI 지원으로 유지 관리되며, 원본 AGPL-3.0 라이선스를 완전히 준수합니다.
 
 <p align="center">
   <img alt="AutoHotkeyV2" src="https://img.shields.io/badge/AutoHotkeyV2-white?logo=AutoHotkey&logoColor=black">
@@ -17,36 +23,38 @@ A PC tool for clearing daily tasks. One-click cleaning of multiple daily chores.
   <br/>
   <img alt="commit" src="https://img.shields.io/github/commit-activity/m/min09577/DoroHelper-AI">
   <img alt="stars" src="https://img.shields.io/github/stars/min09577/DoroHelper-AI?style=social">
-  <a href="https://mirrorchyan.com/?source=doro-github-release" target="_blank"><img alt="mirrorc" src="https://img.shields.io/badge/Mirror%E9%85%B1-%239af3f6?logo=countingworkspro&logoColor=4f46e5"></a>
 </p>
 
 **English Readme | [中文说明](README.md)**
 
 </div>
 
-## DoroHelper Has Been Fully Upgraded to MDA
+---
 
-Thank you all for your continued support and companionship with DoroHelper.
+## About This Repository
 
-During the ongoing development and maintenance process, the overall architecture of the script has become quite outdated, limiting the efficiency of future feature expansion and long-term maintenance. Therefore, based on the entirely new MaaFramework, the script has been completely rewritten. The new version is named **MDA (Maa Doro Assistant)**. With this mature and powerful community tool, future bug fixes and content updates will be more efficient and stable.
+This repository is a derivative of the original [DoroHelper](https://github.com/1204244136/DoroHelper), maintained with AI-assisted development. The original project was built by the following contributors:
 
-Compared to the old version, the new framework brings a series of significant improvements:
+- **@kyokakawaii** — Original creator of DoroHelper (2024.07 ~ 2025.01)
+- **@Zhiyiyi / @1204244136** — Successor maintainer (2025.04 ~ 2026.05)
 
-- Brand new UI design with a cleaner and more aesthetically pleasing interface, natively supporting multilingual, and allowing free customization of themes, colors, and backgrounds
-- Supports free adjustment of task order and provides richer detailed configuration options
-- Supports running the game in the background for a more flexible experience
-- Supports all resolutions, no longer limited to specific resolutions
-- Supports Linux, macOS, and other operating systems, and is compatible with the aarch64 architecture
+Our respect and gratitude to them.
 
-### MDA Download Links
+The original DoroHelper has been archived. Its author has moved on to [MDA](https://github.com/1204244136/MDA). This repository continues the legacy codebase independently.
+
+---
+
+## Original Background: DoroHelper Has Been Upgraded to MDA
+
+The original script's architecture has become outdated. The author has completed a full rewrite based on the MaaFramework, now named **MDA (Maa Doro Assistant)**. For new features, MDA is recommended:
 
 |Channel|Link|
 |--|--|
 |GitHub|[https://github.com/1204244136/MDA/releases/latest](https://github.com/1204244136/MDA/releases/latest)|
-|Baidu Netdisk|[https://pan.baidu.com/s/1X4_vJ3ei9fiayRWHpI0f9A?pwd=bed7](https://pan.baidu.com/s/1X4_vJ3ei9fiayRWHpI0f9A?pwd=bed7) (Extraction code: bed7)|
-|Quark Netdisk|[https://pan.quark.cn/s/9a30ca1aabe7](https://pan.quark.cn/s/9a30ca1aabe7) (Extraction code: Cprn)|
 
-The old version will no longer be maintained but can still be used normally. If the new version does not suit your usage habits, you are welcome to continue using the old version.
+New framework highlights: brand new UI, multilingual support, background operation, full resolution support, cross-platform (Linux/macOS/aarch64).
+
+---
 
 ## Project Evolution History
 
@@ -98,14 +106,13 @@ flowchart LR
 
 ## Version Notes
 
-The features described below are for the latest version. For corresponding features in older versions, please check the README in the [legacy-v0.1.22](https://github.com/1204244136/DoroHelper/tree/legacy-v0.1.22) branch.
-Older versions are no longer maintained!
+The features described below are for the latest version. For corresponding features in older versions, please check the README in the [legacy-v0.1.22](https://github.com/1204244136/DoroHelper/tree/legacy-v0.1.22) branch. Older versions are no longer maintained!
 
 **⚠️ For everyone's convenience, please do not publicly release modified versions of this software related to the Chinese server. Thank you for your cooperation!**
 
 ## Disclaimer
 
-This project is for personal learning and research use only and is strictly prohibited for commercial use. Any content related to this project on websites or social platforms other than Github **is not published by me**. I am not responsible for any consequences such as copyright infringement or violation of network security regulations.
+This project is for personal learning and research use only and is strictly prohibited for commercial use. This repository is a derivative of [DoroHelper](https://github.com/1204244136/DoroHelper); the original code was contributed by the author team. Users assume all responsibility for any consequences.
 
 Using any script program carries the risk of account suspension, please proceed with caution.
 
@@ -200,6 +207,5 @@ Alternatively, you can switch out and click the "**DORO!**" button while the gam
 
 ## Acknowledgements
 
-Code reference:
-
-[M9A](https://github.com/MAA1999/M9A)
+- Original authors: [@kyokakawaii](https://github.com/kyokakawaii), [@1204244136](https://github.com/1204244136)
+- Code reference: [M9A](https://github.com/MAA1999/M9A)
