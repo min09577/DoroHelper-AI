@@ -4,17 +4,19 @@
 
 <img alt="LOGO" src="./img/logo.png" width="256" height="256" />
 
-# DoroHelper
+# DoroHelper-AI
 
 PC 端日常任务清理助手。一键清理多项日常事务。支持除**国服**外的所有客户端。
+
+> **注意：** 本项目是基于 [DoroHelper](https://github.com/1204244136/DoroHelper)（原作者 [@1204244136](https://github.com/1204244136)）的二次开发版本，采用 AI 辅助维护。保留原 AGPL-3.0 许可证。
 
 <p align="center">
   <img alt="AutoHotkeyV2" src="https://img.shields.io/badge/AutoHotkeyV2-white?logo=AutoHotkey&logoColor=black">
   <img alt="platform" src="https://img.shields.io/badge/platform-Windows-blueviolet">
-  <img alt="license" src="https://img.shields.io/github/license/1204244136/DoroHelper">
+  <img alt="license" src="https://img.shields.io/github/license/min09577/DoroHelper-AI">
   <br/>
-  <img alt="commit" src="https://img.shields.io/github/commit-activity/m/1204244136/DoroHelper">
-  <img alt="stars" src="https://img.shields.io/github/stars/1204244136/DoroHelper?style=social">
+  <img alt="commit" src="https://img.shields.io/github/commit-activity/m/min09577/DoroHelper-AI">
+  <img alt="stars" src="https://img.shields.io/github/stars/min09577/DoroHelper-AI?style=social">
   <a href="https://mirrorchyan.com/?source=doro-github-release" target="_blank"><img alt="mirrorc" src="https://img.shields.io/badge/Mirror%E9%85%B1-%239af3f6?logo=countingworkspro&logoColor=4f46e5"></a>
 </p>
 
@@ -219,7 +221,7 @@ Hanpass|PandaRemit|WireBarley|GmoneyTrans|Debunk|PayForex|koala transfer|Sendly|
 
 ## 星标历程
 
-[![Star History Chart](https://api.star-history.com/svg?repos=1204244136/DoroHelper&type=Timeline)](https://www.star-history.com/#1204244136/DoroHelper&Timeline)
+[![Star History Chart](https://api.star-history.com/svg?repos=min09577/DoroHelper-AI&type=Timeline)](https://www.star-history.com/#min09577/DoroHelper-AI&Timeline)
 
 ## 借物表
 

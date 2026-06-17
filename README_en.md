@@ -4,17 +4,19 @@
 
 <img alt="LOGO" src="./img/logo.png" width="256" height="256" />
 
-# DoroHelper
+# DoroHelper-AI
 
 A PC tool for clearing daily tasks. One-click cleaning of multiple daily chores. Supports all clients except the **Chinese Server**.
+
+> **Note:** This project is a derivative of [DoroHelper](https://github.com/1204244136/DoroHelper) (original author [@1204244136](https://github.com/1204244136)), maintained with AI assistance. The original AGPL-3.0 license is retained.
 
 <p align="center">
   <img alt="AutoHotkeyV2" src="https://img.shields.io/badge/AutoHotkeyV2-white?logo=AutoHotkey&logoColor=black">
   <img alt="platform" src="https://img.shields.io/badge/platform-Windows-blueviolet">
-  <img alt="license" src="https://img.shields.io/github/license/1204244136/DoroHelper">
+  <img alt="license" src="https://img.shields.io/github/license/min09577/DoroHelper-AI">
   <br/>
-  <img alt="commit" src="https://img.shields.io/github/commit-activity/m/1204244136/DoroHelper">
-  <img alt="stars" src="https://img.shields.io/github/stars/1204244136/DoroHelper?style=social">
+  <img alt="commit" src="https://img.shields.io/github/commit-activity/m/min09577/DoroHelper-AI">
+  <img alt="stars" src="https://img.shields.io/github/stars/min09577/DoroHelper-AI?style=social">
   <a href="https://mirrorchyan.com/?source=doro-github-release" target="_blank"><img alt="mirrorc" src="https://img.shields.io/badge/Mirror%E9%85%B1-%239af3f6?logo=countingworkspro&logoColor=4f46e5"></a>
 </p>
 
@@ -219,7 +221,7 @@ Hanpass|PandaRemit|WireBarley|GmoneyTrans|Debunk|PayForex|koala transfer|Sendly|
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=1204244136/DoroHelper&type=Timeline)](https://www.star-history.com/#1204244136/DoroHelper&Timeline)
+[![Star History Chart](https://api.star-history.com/svg?repos=min09577/DoroHelper-AI&type=Timeline)](https://www.star-history.com/#min09577/DoroHelper-AI&Timeline)
 
 ## Credits
 
