@@ -114,6 +114,7 @@ global g_settings := Map(
     "EventLargeExtraSign", 0,           ; 大活动签到·额外
     "EventLargeExtraChallenge", 0,      ; 大活动挑战·额外
     "EventLargeExtraStory", 0,          ; 大活动剧情·额外
+    "EventLargeExtraCooperate", 0,       ; 大活动联机·额外
     "EventLargeExtraMinigame", 0,       ; 大活动小游戏·额外
     "EventLargeExtraDaily", 0,          ; 大活动奖励·额外
     ;限时奖励
@@ -178,7 +179,7 @@ global g_numeric_settings := Map(
     "Version", currentVersion,          ; 版本号
     "UpdateChannels", "正式版",         ; 更新渠道
     "DownloadSource", "GitHub",         ; 下载源
-    "GroupDataSource", "API",            ; 用户组数据源 (API/Gitee/GitHub/jsDelivr)
+    "GroupDataSource", "GitHub",        ; 用户组数据源 (GitHub/jsDelivr)
     "PreferredHttpRequest", "WinHttp.WinHttpRequest.5.1", ; HTTP 请求优先级
     "VerificationMethod", "V6",         ; 验证方式 (V6/V4)
     "UserID", "",                        ; 用户ID
@@ -432,9 +433,9 @@ cbSkipGroupCheck := AddCheckboxSetting(doroGui, "SkipUserGroupCheckForFreeUser",
 doroGui.Tips.SetTip(cbSkipGroupCheck, "勾选后，非会员用户启动时将跳过用户组检查以节省时间`nSkip user group check for free users to save startup time")
 g_settingPages["Settings"].Push(cbSkipGroupCheck)
 TextGroupDataSource := doroGui.Add("Text", "R1 +0x0100", "用户组数据源")
-doroGui.Tips.SetTip(TextGroupDataSource, "用户组数据源镜像`nAPI:在线API(推荐)|Gitee:国内源|GitHub:官方源|jsDelivr:CDN加速`nUser Group Data Source Mirror`nAPI: Online (Recommended) | Gitee: Domestic | GitHub: Official | jsDelivr: CDN Accelerated")
+doroGui.Tips.SetTip(TextGroupDataSource, "用户组数据源镜像`nGitHub:官方源|jsDelivr:CDN加速")
 g_settingPages["Settings"].Push(TextGroupDataSource)
-cbGroupDataSource := doroGui.AddDropDownList("x+20 w100", ["API", "Gitee", "GitHub", "jsDelivr"])
+cbGroupDataSource := doroGui.AddDropDownList("x+20 w100", ["GitHub", "jsDelivr"])
 cbGroupDataSource.Text := g_numeric_settings["GroupDataSource"]
 cbGroupDataSource.OnEvent("Change", (Ctrl, Info) => g_numeric_settings["GroupDataSource"] := Ctrl.Text)
 g_settingPages["Settings"].Push(cbGroupDataSource)
@@ -885,7 +886,7 @@ if A_UserName != "12042" {
     if (g_settings["SkipUserGroupCheckForFreeUser"]) {
         AddLog("已跳过用户组检查（非会员跳过已启用）", "Blue")
     } else {
-        CheckUserGroup
+        CheckUserGroup()
     }
 }
 ;tag 广告（已禁用随启动弹出）
@@ -1622,8 +1623,8 @@ CheckForUpdate_AHK_File(isManualCheck) {
             ; A_TimeZone 是本地时间与UTC时间的分钟差。
             ; UTC = 本地时间 + A_TimeZone。例如，如果本地时区是 GMT+8，A_TimeZone 是 -480 分钟。
             ; 所以 localLastModifiedUTC = DateAdd(localLastModified, A_TimeZone, "minutes")
-            A_TimeZone := DateDiff(A_NowUTC, A_Now, "Minutes")
-            localLastModifiedUTC := DateAdd(localLastModified, A_TimeZone, "minutes")
+            localTimeZoneOffset := DateDiff(A_NowUTC, A_Now, "Minutes")
+            localLastModifiedUTC := DateAdd(localLastModified, localTimeZoneOffset, "minutes")
         }
     } catch as e {
         AddLog("计算本地文件哈希、获取修改时间或转换时区失败，错误信息: " . e.Message, "Red")
@@ -1791,8 +1792,8 @@ CheckForResourceUpdate(isManualCheck) {
                         localSha := HashGitSHA1(localFilePath)
                         localLastModified := FileGetTime(localFilePath, "M")
                         ; 转换为UTC时间进行比较
-                        A_TimeZone := DateDiff(A_NowUTC, A_Now, "Minutes")
-                        localLastModifiedUTC := DateAdd(localLastModified, A_TimeZone, "minutes")
+                        localTimeZoneOffset := DateDiff(A_NowUTC, A_Now, "Minutes")
+                        localLastModifiedUTC := DateAdd(localLastModified, localTimeZoneOffset, "minutes")
                     } catch as e {
                         AddLog("错误: 计算本地文件 " . remoteFileName . " 哈希、获取修改时间或转换时区失败: " . e.Message, "Red")
                         failedFiles.Push(remoteFileName)
@@ -3509,7 +3510,7 @@ UncheckAllTasks(*) {
 ShowMirror(Ctrl, Info) {
     return
 }
-}
+;tag 隐藏所有二级设置
 ;tag 隐藏所有二级设置
 HideAllSettings() {
     global g_settingPages
@@ -3554,25 +3555,15 @@ ShowMigrationNotice(*) {
     noticeGui.OnEvent("Close", (*) => noticeGui.Destroy())
     noticeGui.Show()
 }
-;tag 活动结束提醒
+;tag 活动结束提醒（社区免费版，已移除过期活动提示）
 CheckEvent(*) {
-    MyFileShortHash := SubStr(A_Now, 1, 8)
-    if MyFileShortHash = "20260326" {
-        MsgBox "单人突击将在今天结束！"
-    }
-    if MyFileShortHash = "20251126" {
-        MsgBox "GODDESS FALL活动将在今天结束，请尽快完成活动！记得捡垃圾、搬空商店！"
-        MsgBox "特殊招募将在今天结束，手头有券的别忘了！"
-        MsgBox "娜由塔的招募将在今天结束，需要抽突破的别忘了！"
-        MsgBox "莉贝雷利奥的招募将在今天结束，需要抽突破的别忘了！"
-    }
+    return
 }
 ;tag 帮助
 ClickOnHelp(*) {
     MyHelp := Gui(, "帮助")
     MyHelp.SetFont('s10', 'Microsoft YaHei UI')
-    MyHelp.Add("Text", "w600", "- 本软件一天最多运行两个账号（同一个账号游戏多次开关也会计数），如有多账号运行相关需求请联系作者")
-    MyHelp.Add("Text", "w600", "- 如有问题请先尝试将更新渠道切换至AHK版并进行更新（需要优质网络）。如果无法更新或仍有问题请加入反馈qq群584275905，反馈必须附带日志和录屏")
+    MyHelp.Add("Text", "w600", "- 如有问题请提交 GitHub Issue: https://github.com/min09577/DoroHelper-AI/issues")
     MyHelp.Add("Text", "w600", "- 使用前请先完成所有特殊任务（例如珍藏品任务），以防图标错位")
     MyHelp.Add("Text", "w600", "- 游戏分辨率需要设置成**16:9**的分辨率，小于1080p可能有问题，暂不打算特殊支持")
     MyHelp.Add("Text", "w600", "- 由于使用的是图像识别，请确保游戏画面完整在屏幕内，且**游戏画面没有任何遮挡**")
@@ -4194,25 +4185,25 @@ BattleSettlement(currentVictory := 0, modes*) {
             case "Screenshot":
             {
                 Screenshot := true
-                if BattleSkip := 1
+                if BattleSkip == 1
                     AddLog("截图功能已启用", "Green")
             }
             case "RedCircle":
             {
                 RedCircle := true
-                if BattleSkip := 1
+                if BattleSkip == 1
                     AddLog("红圈功能已启用", "Green")
             }
             case "Exit7":
             {
                 Exit7 := true
-                if BattleSkip := 1
+                if BattleSkip == 1
                     AddLog("满7自动退出功能已启用", "Green")
             }
             case "EventStory":
             {
                 EventStory := true
-                if BattleSkip := 1
+                if BattleSkip == 1
                     AddLog("剧情跳过功能已启用", "Green")
             }
             default: MsgBox "格式输入错误，你输入的是" mode
