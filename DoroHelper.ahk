@@ -3549,8 +3549,6 @@ ShowMigrationNotice(*) {
     noticeGui.Add("Text", "w420", "")
     noticeGui.Add("Link", "w420", '仓库地址：<a href="https://github.com/min09577/DoroHelper-AI">https://github.com/min09577/DoroHelper-AI</a>')
     noticeGui.Add("Text", "w420", "")
-    noticeGui.Add("Link", "w420", '原项目 MDA：<a href="https://github.com/1204244136/MDA/releases/latest">https://github.com/1204244136/MDA</a>')
-    noticeGui.Add("Text", "w420", "")
     noticeGui.Add("Button", "w100 x330", "知道了").OnEvent("Click", (*) => noticeGui.Destroy())
     noticeGui.OnEvent("Close", (*) => noticeGui.Destroy())
     noticeGui.Show()
